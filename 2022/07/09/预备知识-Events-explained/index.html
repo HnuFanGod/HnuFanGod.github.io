@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="官方文档：Events explained (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 事件类型 sf::Event是一个联合，这意味着一次只有一个成员有效(联合的所有成员共享相同的内存空间)。有效成员是与事件类型匹配的成员，例如event。按键事件的按键。尝试读取任何其他成员将导致未定义的行为（很可能是随机或无效值）。 sf::">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预备知识(Events explained)">
+<meta property="og:url" content="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/index.html">
+<meta property="og:site_name" content="帆帆的BLOG">
+<meta property="og:description" content="官方文档：Events explained (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 事件类型 sf::Event是一个联合，这意味着一次只有一个成员有效(联合的所有成员共享相同的内存空间)。有效成员是与事件类型匹配的成员，例如event。按键事件的按键。尝试读取任何其他成员将导致未定义的行为（很可能是随机或无效值）。 sf::">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-09T12:03:03.000Z">
+<meta property="article:modified_time" content="2022-07-10T11:19:11.946Z">
+<meta property="article:author" content="一只小帆帆">
+<meta property="article:tag" content="SFML">
+<meta property="article:tag" content="window module">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>预备知识(Events explained) | 帆帆的BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">帆帆的BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          预备知识(Events explained)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-09 20:03:03" itemprop="dateCreated datePublished" datetime="2022-07-09T20:03:03+08:00">2022-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-10 19:19:11" itemprop="dateModified" datetime="2022-07-10T19:19:11+08:00">2022-07-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-events.php#the-mousebuttonpressed-and-mousebuttonreleased-events">Events explained (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h1><p> <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::Event</code></a>是一个<em>联合</em>，这意味着一次只有一个成员有效(联合的所有成员共享相同的内存空间)。有效成员是与事件类型匹配的成员，例如event。按键事件的按键。尝试读取任何其他成员将导致未定义的行为（很可能是随机或无效值）。</p>
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::事件</code></a>实例由 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf::Window</code></a> 类的<code>pollEvent</code>(或<code>waitEvent</code>)函数填充。只有这两个函数可以生成有效的事件，任何尝试使用成功调用（或）未返回的<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::Event</code></a>都将导致与上面提到的相同的未定义行为。</p>
+<p>典型的事件循环：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">sf::Event event;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 检查事件种类</span></span><br><span class="line">    <span class="keyword">switch</span> (event.type)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 窗口关闭</span></span><br><span class="line">        <span class="keyword">case</span> sf::Event::Closed:</span><br><span class="line">            window.<span class="built_in">close</span>();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 按键按下</span></span><br><span class="line">        <span class="keyword">case</span> sf::Event::KeyPressed:</span><br><span class="line">            ...</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 不处理其他类型的事件</span></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="已关闭事件（The-Closed-event）"><a href="#已关闭事件（The-Closed-event）" class="headerlink" title="已关闭事件（The Closed event）"></a>已关闭事件（The Closed event）</h1><p>当用户想要关闭窗口时，通过窗口管理器提供的任何可能的方法（“关闭”按钮，键盘快捷键等）触发该事件。此事件仅表示关闭请求，收到事件时窗口尚未关闭。</p>
+<p>典型的代码将仅响应此事件进行调用，以实际关闭窗口。但是，您可能还希望先执行其他操作，例如保存当前应用程序状态或询问用户要执行的操作。如果您不执行任何操作，窗口将保持打开状态。</p>
+<p>sf::Event联合中没有与此事件关联的成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::Closed)</span><br><span class="line">    window.<span class="built_in">close</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="已调整大小事件（The-Resized-event）"><a href="#已调整大小事件（The-Resized-event）" class="headerlink" title="已调整大小事件（The Resized event）"></a>已调整大小事件（The Resized event）</h1><p>当通过用户操作或通过调用<code>window.setSize</code>以编程方式调整窗口大小时将触发该事件来设置大小。</p>
+<p>可以使用此事件来调整渲染设置：如果直接使用 OpenGL，则为视口，如果使用 sfml-graphics，则为当前视图。</p>
+<p>与此事件关联的成员是<code>event.size</code>。它包含窗口的新大小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::Resized)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new width: &quot;</span> &lt;&lt; event.size.width &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new height: &quot;</span> &lt;&lt; event.size.height &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="失去焦点和获得焦点事件（The-LostFocus-and-GainedFocus-events）"><a href="#失去焦点和获得焦点事件（The-LostFocus-and-GainedFocus-events）" class="headerlink" title="失去焦点和获得焦点事件（The LostFocus and GainedFocus events）"></a>失去焦点和获得焦点事件（The LostFocus and GainedFocus events）</h1><p>当窗口失去&#x2F;获得焦点时，会触发<code>sf::Event::LostFocus</code>和<code>sf::Event::GainedFocus</code>事件，这在用户切换当前活动窗口时发生。当窗口失焦时，它不会接收键盘事件。</p>
+<p>例如，如果您想在窗口处于非活动状态时暂停游戏，可以使用此事件。</p>
+<p>sf::Event联合中没有与这些事件关联的成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::LostFocus)</span><br><span class="line">    myGame.<span class="built_in">pause</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (event.type == sf::Event::GainedFocus)</span><br><span class="line">    myGame.<span class="built_in">resume</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="文本输入事件（The-TextEntered-event）"><a href="#文本输入事件（The-TextEntered-event）" class="headerlink" title="文本输入事件（The TextEntered event）"></a>文本输入事件（The TextEntered event）</h1><p>键入字符时会触发<code>sf::Event::TextEntered</code>事件。这不能与<code>KeyPressed</code>事件混淆,<code>TextEntered</code>解释用户输入并生成适当的可打印字符。例如，在法语键盘上按“^”然后按“e”将生成两个按键事件，但一个包含“ê”字符的<code>TextEntered</code>事件。它适用于操作系统提供的所有输入方法，即使是最具体或最复杂的输入方法。</p>
+<p>此事件通常用于捕获文本字段中的用户输入。</p>
+<p>与此事件关联的成员是<code>event</code>。文本，它包含输入字符的Unicode值。您可以将其直接放入sf::string中，也可以在确保其处于ASCII范围（0-127）后将其转换为字符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::TextEntered)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.text.unicode &lt; <span class="number">128</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;ASCII character typed: &quot;</span> &lt;&lt; <span class="built_in">static_cast</span>&lt;<span class="type">char</span>&gt;(event.text.unicode) &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于它们是Unicode标准的一部分，因此此事件会生成一些不可打印的字符，如backspace。在大多数情况下，您需要过滤掉它们。</p>
+<h1 id="释放-x2F-按下键盘键事件（The-KeyPressed-and-KeyReleased-events）"><a href="#释放-x2F-按下键盘键事件（The-KeyPressed-and-KeyReleased-events）" class="headerlink" title="释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）"></a>释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）</h1><p>当按下&#x2F;释放键盘键时，会触发<code>sf::Event::KeyPressed</code> 和<code>sf::Event::KeyReleased</code>事件。</p>
+<p>如果按住一个键，将以默认操作系统延迟（即，在文本编辑器中按住字母时应用的相同延迟）生成多个按键事件。要禁用重复的按键事件，可以调用<code>window.setKeyRepeatEnabled</code>（false）。另一方面，很明显，<code>KeyReleased</code>事件永远不会重复。</p>
+<p>有时，人们试图直接对按键事件做出反应，以实现平稳的运动。这样做不会产生预期的效果，因为当您按住一个键时，您只会得到几个事件（请记住，重复延迟）。要实现事件的平滑移动，必须使用一个布尔值，该布尔值在按下键时设置，在释放键时清除；然后，只要设置了布尔值，就可以移动（与事件无关）。另一个（更容易）实现平滑移动的解决方案是使用<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php"><code>sf::Keyboard</code></a> 的实时键盘输入（请参阅专用教程）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::KeyPressed)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.key.code == sf::Keyboard::Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;the escape key was pressed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;control:&quot;</span> &lt;&lt; event.key.control &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;alt:&quot;</span> &lt;&lt; event.key.alt &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;shift:&quot;</span> &lt;&lt; event.key.shift &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;system:&quot;</span> &lt;&lt; event.key.system &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标滚轮滚动事件（The-MouseWheelScrolled-event）"><a href="#鼠标滚轮滚动事件（The-MouseWheelScrolled-event）" class="headerlink" title="鼠标滚轮滚动事件（The MouseWheelScrolled event）"></a>鼠标滚轮滚动事件（The MouseWheelScrolled event）</h1><p>当鼠标滚轮向上或向下移动时，会触发<code>sf::Event::MouseWheelScrolled</code>事件，如果鼠标支持它，也会触发横向事件。</p>
+<p>与此事件关联的成员是 <code>event.mouseWheelScroll</code>, 它包含滚轮移动的刻度数、滚轮的方向以及鼠标光标的当前位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseWheelScrolled)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: vertical&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (event.mouseWheelScroll.wheel == sf::Mouse::HorizontalWheel)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: horizontal&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: unknown&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;wheel movement: &quot;</span> &lt;&lt; event.mouseWheelScroll.delta &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mouse x: &quot;</span> &lt;&lt; event.mouseWheelScroll.x &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mouse y: &quot;</span> &lt;&lt; event.mouseWheelScroll.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标按钮按下和释放事件（The-MouseButtonPressed-and-MouseButtonReleased-events）"><a href="#鼠标按钮按下和释放事件（The-MouseButtonPressed-and-MouseButtonReleased-events）" class="headerlink" title="鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）"></a>鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）</h1><p>按下&#x2F;释放鼠标按钮时，会触发<code>sf::Event::MouseButtonPressed</code>和<code>sf::Event::MouseButtonReleased</code>事件。</p>
+<p>SFML支持5个鼠标按钮：左、右、中（滚轮）、额外#1和额外#2（侧按钮）。</p>
+<p>与这些事件关联的成员是<code>event.mouseButton</code>。它包含按下&#x2F;释放按钮的代码，以及鼠标光标的当前位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseButtonPressed)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.mouseButton.button == sf::Mouse::Right)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;the right button was pressed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;mouse x: &quot;</span> &lt;&lt; event.mouseButton.x &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;mouse y: &quot;</span> &lt;&lt; event.mouseButton.y &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标移动事件（The-MouseMoved-event）"><a href="#鼠标移动事件（The-MouseMoved-event）" class="headerlink" title="鼠标移动事件（The MouseMoved event）"></a>鼠标移动事件（The MouseMoved event）</h1><p>当鼠标在窗口内移动时，将触发<code>sf::Event::MouseMoved</code>事件。</p>
+<p>即使窗口未聚焦，也会触发此事件。但是，只有当鼠标在窗口的内部区域内移动时才会触发，而不是在标题栏或边框上移动时。</p>
+<p>与此事件关联的成员是<code>event.mouseMove</code>，它包含鼠标光标相对于窗口的当前位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseMoved)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new mouse x: &quot;</span> &lt;&lt; event.mouseMove.x &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new mouse y: &quot;</span> &lt;&lt; event.mouseMove.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标进入和离开事件（The-MouseEntered-and-MouseLeft-event"><a href="#鼠标进入和离开事件（The-MouseEntered-and-MouseLeft-event" class="headerlink" title="鼠标进入和离开事件（The MouseEntered and MouseLeft event)"></a>鼠标进入和离开事件（The MouseEntered and MouseLeft event)</h1><p>当鼠标光标进入&#x2F;离开窗口时，会触发<code>sf::Event::MouseEntered</code>和<code>sf::Event::MouseLeft</code>事件。</p>
+<p><code>sf::Event</code>事件联合中没有与这些事件关联的成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseEntered)</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;the mouse cursor has entered the window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseLeft)</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;the mouse cursor has left the window&quot;</span> &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SFML/" rel="tag"># SFML</a>
+              <a href="/tags/window-module/" rel="tag"># window module</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Opening-and-managing-a-SFML-window)/" rel="prev" title="预备知识(Opening and managing a SFML window)">
+      <i class="fa fa-chevron-left"></i> 预备知识(Opening and managing a SFML window)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Keyboard-and-mouse/" rel="next" title="预备知识(Keyboard and mouse)">
+      预备知识(Keyboard and mouse) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">事件类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%B2%E5%85%B3%E9%97%AD%E4%BA%8B%E4%BB%B6%EF%BC%88The-Closed-event%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">已关闭事件（The Closed event）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%B2%E8%B0%83%E6%95%B4%E5%A4%A7%E5%B0%8F%E4%BA%8B%E4%BB%B6%EF%BC%88The-Resized-event%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">已调整大小事件（The Resized event）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%B1%E5%8E%BB%E7%84%A6%E7%82%B9%E5%92%8C%E8%8E%B7%E5%BE%97%E7%84%A6%E7%82%B9%E4%BA%8B%E4%BB%B6%EF%BC%88The-LostFocus-and-GainedFocus-events%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">失去焦点和获得焦点事件（The LostFocus and GainedFocus events）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5%E4%BA%8B%E4%BB%B6%EF%BC%88The-TextEntered-event%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">文本输入事件（The TextEntered event）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8A%E6%94%BE-x2F-%E6%8C%89%E4%B8%8B%E9%94%AE%E7%9B%98%E9%94%AE%E4%BA%8B%E4%BB%B6%EF%BC%88The-KeyPressed-and-KeyReleased-events%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E6%BB%9A%E5%8A%A8%E4%BA%8B%E4%BB%B6%EF%BC%88The-MouseWheelScrolled-event%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">鼠标滚轮滚动事件（The MouseWheelScrolled event）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E6%8C%89%E9%92%AE%E6%8C%89%E4%B8%8B%E5%92%8C%E9%87%8A%E6%94%BE%E4%BA%8B%E4%BB%B6%EF%BC%88The-MouseButtonPressed-and-MouseButtonReleased-events%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8%E4%BA%8B%E4%BB%B6%EF%BC%88The-MouseMoved-event%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">鼠标移动事件（The MouseMoved event）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E8%BF%9B%E5%85%A5%E5%92%8C%E7%A6%BB%E5%BC%80%E4%BA%8B%E4%BB%B6%EF%BC%88The-MouseEntered-and-MouseLeft-event"><span class="nav-number">10.</span> <span class="nav-text">鼠标进入和离开事件（The MouseEntered and MouseLeft event)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一只小帆帆"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">一只小帆帆</p>
+  <div class="site-description" itemprop="description">简介不了，慢慢观察</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一只小帆帆</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+</body>
+</html>

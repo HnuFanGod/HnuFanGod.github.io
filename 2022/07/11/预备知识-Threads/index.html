@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="官方文档：Threads (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 线程是什么？线程基本上是与其他线程并行运行的一系列指令。每个程序都由至少一个线程组成：主线程运行你的函数。仅使用主线程的程序是单线程的，如果添加一个或多个线程，它们将变为多线程。 简而言之，线程是一种同时执行多项操作的方法。例如，这对于在加载图像或声音时显示动画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预备知识(Threads)">
+<meta property="og:url" content="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Threads/index.html">
+<meta property="og:site_name" content="帆帆的BLOG">
+<meta property="og:description" content="官方文档：Threads (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 线程是什么？线程基本上是与其他线程并行运行的一系列指令。每个程序都由至少一个线程组成：主线程运行你的函数。仅使用主线程的程序是单线程的，如果添加一个或多个线程，它们将变为多线程。 简而言之，线程是一种同时执行多项操作的方法。例如，这对于在加载图像或声音时显示动画">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-11T08:33:03.000Z">
+<meta property="article:modified_time" content="2022-07-11T09:32:37.554Z">
+<meta property="article:author" content="一只小帆帆">
+<meta property="article:tag" content="SFML">
+<meta property="article:tag" content="system module">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Threads/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>预备知识(Threads) | 帆帆的BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">帆帆的BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Threads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          预备知识(Threads)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-11 16:33:03 / 修改时间：17:32:37" itemprop="dateCreated datePublished" datetime="2022-07-11T16:33:03+08:00">2022-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-thread.php">Threads (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="线程是什么？"><a href="#线程是什么？" class="headerlink" title="线程是什么？"></a>线程是什么？</h1><p>线程基本上是与其他线程并行运行的一系列指令。每个程序都由至少一个线程组成：主线程运行你的函数。仅使用主线程的程序是单线程的，如果添加一个或多个线程，它们将变为多线程。</p>
+<p>简而言之，线程是一种同时执行多项操作的方法。例如，这对于在加载图像或声音时显示动画和对用户输入做出反应非常有用。线程也广泛用于网络编程，等待数据接收，同时继续更新和绘制应用程序。</p>
+<h1 id="使用SFML创建线程"><a href="#使用SFML创建线程" class="headerlink" title="使用SFML创建线程"></a>使用SFML创建线程</h1><p>可以在 SFML 中创建线程的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a>，下面是它在操作中的样子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/System.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 此函数在调用 thread.launch()时启动</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m thread number one&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个以 func()作为入口点的线程</span></span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 运行它</span></span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 主线程继续运行...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m the main thread&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此代码中，两者都在调用后并行运行。结果是，来自这两个函数的文本应该在控制台中混合。</p>
+<p>线程启动时将运行的函数必须传递给 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 的构造函数。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a>试图灵活并接受各种各样的入口点：非成员或成员函数，有或没有参数，仿函数（Functor）等。上面的示例显示了如何使用非成员函数，下面是一些其他示例。</p>
+<p>- 具有一个参数的非成员函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func, <span class="number">5</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>-成员函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">MyClass object;</span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;MyClass::func, &amp;object)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>-仿函数（函数对象）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">MyFunctor</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(MyFunctor())</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后一个使用函子的示例是最强大的示例，因为它可以接受任何类型的函子，因此使 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 与许多不直接支持的函数类型兼容。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// with lambdas</span></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">([]()&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">    std::cout &lt;&lt; <span class="string">&quot;I am in thread!&quot;</span> &lt;&lt; std::endl;</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// with std::bind</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(std::string, <span class="type">int</span>, <span class="type">double</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(std::bind(&amp;func, <span class="string">&quot;hello&quot;</span>, <span class="number">24</span>, <span class="number">0.5</span>))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果要在类中使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a>，请不要忘记它没有默认构造函数。因此，您必须直接在构造函数的<em>初始化列表中对其进行初始化</em>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ClassWithThread</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ClassWithThread</span>()</span><br><span class="line">    : <span class="built_in">m_thread</span>(&amp;ClassWithThread::f, <span class="keyword">this</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sf::Thread m_thread;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果确实需要在构造 owner 对象<em>后</em>构造 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 实例，还可以通过在堆上动态分配来延迟其构造。</p>
+<h1 id="开始线程"><a href="#开始线程" class="headerlink" title="开始线程"></a>开始线程</h1><p>创建 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 实例后，必须使用函数<code>launch</code>启动它。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line">thread.<span class="built_in">launch</span>();</span><br></pre></td></tr></table></figure>
+
+<p><code>launch</code>调用您在新线程中传递给构造函数的函数，并立即返回，以便调用线程可以继续运行。</p>
+<h1 id="停止线程"><a href="#停止线程" class="headerlink" title="停止线程"></a>停止线程</h1><p>当线程的入口点函数返回时，线程会自动停止。如果要等待一个线程从另一个线程完成，可以调用wait函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开始线程</span></span><br><span class="line">thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻塞执行直到线程完成</span></span><br><span class="line">thread.<span class="built_in">wait</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="暂停线程"><a href="#暂停线程" class="headerlink" title="暂停线程"></a>暂停线程</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf：：Thread</code></a> 中没有允许另一个线程暂停它的函数，暂停线程的唯一方法是从它运行的代码中执行此操作。换句话说，您只能暂停当前线程。为此，您可以调用该函数：<code>sf::sleep</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    sf::<span class="built_in">sleep</span>(sf::<span class="built_in">milliseconds</span>(<span class="number">10</span>));</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>sf::sleep</code>有一个参数，那就是睡觉的时间。此持续时间可以使用任何单位&#x2F;精度给出，如<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-time.php">时间教程</a>中所示。<br>请注意，您可以使用此函数使任何线程进入睡眠状态，即使是主线程。</p>
+<p><code>sf::sleep</code>是暂停线程的最有效方法：只要线程进入睡眠状态，就不需要 CPU。基于活动等待的暂停，如空循环，将消耗100%的CPU什么都不做。但是，请记住，睡眠持续时间只是一个提示，根据操作系统的不同，它将或多或少地准确。因此，不要依赖它来获得非常精确的时间。</p>
+<h1 id="保护共享数据"><a href="#保护共享数据" class="headerlink" title="保护共享数据"></a>保护共享数据</h1><p>程序中的所有线程共享相同的内存，它们可以访问其所在范围内的所有变量。这非常方便，但也很危险：由于线程并行运行，这意味着可以同时从多个线程同时使用变量或函数。如果操作不是线程安全的，则可能导致未定义的行为（即，它可能会崩溃或损坏数据）。</p>
+<p>有几种编程工具可帮助您保护共享数据并使代码线程安全，这些工具称为同步基元。常见的是互斥锁，信号量，条件变量和自旋锁。它们都是同一概念的变体：它们通过仅允许某些线程访问代码而阻止其他线程来保护代码段。</p>
+<p>最基本（和使用的）基元是互斥体。Mutex代表“MUTual EXclusion”：它确保只有一个线程能够运行它所保护的代码。让我们看看他们如何为上面的示例带来一些秩序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/System.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line">sf::Mutex mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mutex.<span class="built_in">lock</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m thread number one&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    mutex.<span class="built_in">unlock</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">    mutex.<span class="built_in">lock</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m the main thread&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    mutex.<span class="built_in">unlock</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此代码使用共享资源 （），正如我们所看到的，它会产生不需要的结果 - 所有内容都在控制台中混合。为了确保正确打印完整的行而不是随机混合，我们使用互斥锁保护代码的相应区域。</p>
+<p>到达其行的第一个线程成功锁定互斥体，直接访问其后面的代码并打印其文本。当另一个线程到达其行时，互斥体已被锁定，因此线程被置于休眠状态（例如，休眠线程不会消耗 CPU 时间）。当第一个线程最终解锁互斥体时，第二个线程将被唤醒，并允许锁定互斥体并打印其文本块。这会导致文本行按顺序显示在控制台中，而不是混合出现。</p>
+<p>互斥体不是可用于保护共享变量的唯一基元，如果你的应用程序使用线程执行复杂的操作，寻找具有更多功能的真正线程库。</p>
+<h1 id="保护互斥锁"><a href="#保护互斥锁" class="headerlink" title="保护互斥锁"></a>保护互斥锁</h1><p>为了确保互斥锁始终在可能引发异常的环境中解锁，SFML 提供了一个 RAII 类来包装它们：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Lock.php"><code>sf::Lock</code></a>。它在其构造函数中锁定互斥体，并在其析构函数中将其解锁。简单高效。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sf::Mutex mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Lock <span class="title">lock</span><span class="params">(mutex)</span></span>; <span class="comment">// mutex.lock()</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">functionThatMightThrowAnException</span>(); <span class="comment">// mutex.unlock() 如果这个函数抛出</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="comment">// mutex.unlock()</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Lock.php"><code>sf::Lock</code></a> 在具有多个语句的函数中也很有用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sf::Mutex mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Lock <span class="title">lock</span><span class="params">(mutex)</span></span>; <span class="comment">// mutex.lock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!image1.<span class="built_in">loadFromFile</span>(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// mutex.unlock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!image2.<span class="built_in">loadFromFile</span>(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// mutex.unlock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!image3.<span class="built_in">loadFromFile</span>(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// mutex.unlock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="comment">// mutex.unlock()</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h1><p>程序员经常忽略的一件事是，如果没有相应的<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf：：Thread</code></a>实例，线程就无法生存。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">startThread</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;funcToRunInThread)</span></span>;</span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">startThread</span>();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写此类代码的程序员希望函数启动一个线程，该线程将独立存在，并在线程化函数结束时被销毁。事实并非如此。线程化函数似乎阻塞了主线程，就好像线程不起作用一样。</p>
+<p>这是什么原因造成的？<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 实例是函数的本地实例，因此当函数返回时，会立即销毁。调用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 的析构函数，正如我们上面所了解的那样，调用它，结果是主线程阻塞并等待线程函数完成，而不是继续并行运行。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SFML/" rel="tag"># SFML</a>
+              <a href="/tags/system-module/" rel="tag"># system module</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Handling-time/" rel="prev" title="预备知识(Handling time)">
+      <i class="fa fa-chevron-left"></i> 预备知识(Handling time)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-User-data-streams/" rel="next" title="预备知识(User data streams)">
+      预备知识(User data streams) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">线程是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8SFML%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">使用SFML创建线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">开始线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">停止线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9A%82%E5%81%9C%E7%BA%BF%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">暂停线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%9D%E6%8A%A4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">保护共享数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%9D%E6%8A%A4%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">7.</span> <span class="nav-text">保护互斥锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">8.</span> <span class="nav-text">常见错误</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一只小帆帆"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">一只小帆帆</p>
+  <div class="site-description" itemprop="description">简介不了，慢慢观察</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一只小帆帆</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+</body>
+</html>

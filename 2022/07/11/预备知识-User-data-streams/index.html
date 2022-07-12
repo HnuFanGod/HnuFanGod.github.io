@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="官方文档：Opening and managing a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 打开一个WindowsSFML中的窗口由sf：：Window类定义。可直接创建和打开窗口： 12345678910#include &lt;SFML&#x2F;Window.hpp&gt;int main()&amp;#123">
+  <meta name="description" content="官方文档：User data streams (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 介绍SFML有几个资源类：图像，字体，声音等。在大多数程序中，这些资源将借助其功能从文件加载。在其他一些情况下，资源将直接打包到可执行文件或大数据文件中，并使用 从内存中加载。这些函数几乎涵盖了所有可能的用例，但不是全部。 有时，您希望从不寻">
 <meta property="og:type" content="article">
-<meta property="og:title" content="预备知识(Opening and managing a SFML window)">
-<meta property="og:url" content="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:title" content="预备知识(User data streams)">
+<meta property="og:url" content="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-User-data-streams/index.html">
 <meta property="og:site_name" content="帆帆的BLOG">
-<meta property="og:description" content="官方文档：Opening and managing a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 打开一个WindowsSFML中的窗口由sf：：Window类定义。可直接创建和打开窗口： 12345678910#include &lt;SFML&#x2F;Window.hpp&gt;int main()&amp;#123">
+<meta property="og:description" content="官方文档：User data streams (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 介绍SFML有几个资源类：图像，字体，声音等。在大多数程序中，这些资源将借助其功能从文件加载。在其他一些情况下，资源将直接打包到可执行文件或大数据文件中，并使用 从内存中加载。这些函数几乎涵盖了所有可能的用例，但不是全部。 有时，您希望从不寻">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-09T08:18:05.000Z">
-<meta property="article:modified_time" content="2022-07-09T09:36:03.138Z">
+<meta property="article:published_time" content="2022-07-11T09:32:10.000Z">
+<meta property="article:modified_time" content="2022-07-11T09:41:53.575Z">
 <meta property="article:author" content="一只小帆帆">
 <meta property="article:tag" content="SFML">
-<meta property="article:tag" content="window module">
+<meta property="article:tag" content="system module">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/">
+<link rel="canonical" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-User-data-streams/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>预备知识(Opening and managing a SFML window) | 帆帆的BLOG</title>
+  <title>预备知识(User data streams) | 帆帆的BLOG</title>
   
 
 
@@ -190,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-User-data-streams/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -203,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          预备知识(Opening and managing a SFML window)
+          预备知识(User data streams)
         </h1>
 
         <div class="post-meta">
@@ -214,7 +214,20 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-09 16:18:05 / 修改时间：17:36:03" itemprop="dateCreated datePublished" datetime="2022-07-09T16:18:05+08:00">2022-07-09</time>
+              <time title="创建时间：2022-07-11 17:32:10 / 修改时间：17:41:53" itemprop="dateCreated datePublished" datetime="2022-07-11T17:32:10+08:00">2022-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
             </span>
 
           
@@ -235,46 +248,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-window.php">Opening and managing a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
-<h1 id="打开一个Windows"><a href="#打开一个Windows" class="headerlink" title="打开一个Windows"></a>打开一个Windows</h1><p>SFML中的窗口由sf：：Window类定义。可直接创建和打开窗口：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/Window.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Window <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;My window&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-stream.php">User data streams (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>SFML有几个资源类：图像，字体，声音等。在大多数程序中，这些资源将借助其功能从文件加载。在其他一些情况下，资源将直接打包到可执行文件或大数据文件中，并使用 从内存中加载。这些函数<em>几乎</em>涵盖了所有可能的用例，但不是全部。</p>
+<p>有时，您希望从不寻常的位置加载文件，例如压缩&#x2F;加密的存档或远程网络位置。对于这些特殊情况，SFML 提供了第三个加载函数：。此函数使用抽象的 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1InputStream.php"><code>sf::InputStream</code></a> 接口读取数据，该接口允许您提供自己的与 SFML 配合使用的流类的实现。</p>
+<h1 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1InputStream.php"><code>sf::InputStream</code></a> 类声明了四个虚函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">InputStream</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">InputStream</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">read</span><span class="params">(<span class="type">void</span>* data, Int64 size)</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">seek</span><span class="params">(Int64 position)</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">tell</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">getSize</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>第一个参数：定义了窗口的大小（宽度和高度），这里是800*600像素的窗口。</p>
-<p>第二个参数：表示的是窗口的标题</p>
-<p>第三个参数（可选）：窗口的样式</p>
-<table>
-<thead>
-<tr>
-<th>参数值</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>sf::Style::None</td>
-<td>无装饰（不能与其他样式结合使用）</td>
-</tr>
-<tr>
-<td>sf::Style::Titlebar</td>
-<td>窗口有一个标题栏</td>
-</tr>
-<tr>
-<td>sf::Style::Resize</td>
-<td>窗口可以调整大小并具有最大化按钮</td>
-</tr>
-<tr>
-<td>sf::Style::Close</td>
-<td>窗口有一个关闭按钮</td>
-</tr>
-<tr>
-<td>sf::Style::Fullscreen</td>
-<td>该窗口以全屏模式显示（不能与其他样式结合使用）</td>
-</tr>
-<tr>
-<td>sf::Style::Default</td>
-<td>默认样式（Titlebar|Resize|Close）</td>
-</tr>
-</tbody></table>
-<h1 id="执行windows"><a href="#执行windows" class="headerlink" title="执行windows"></a>执行windows</h1>
+<p><strong>read</strong> 必须从流中提取<em>数据的大小</em>字节，并将它们复制到提供<em>的数据</em>地址。它返回读取的字节数，或在出错时返回 -1。</p>
+<p><strong>Seek</strong>必须更改流中的当前读取位置。其<em>位置</em>参数是要跳转到的绝对字节偏移量（因此它是相对于数据的开头，而不是相对于当前位置）。它返回新位置，或在出错时返回 -1。</p>
+<p><strong>tell</strong> 必须返回流中的当前读取位置（以字节为单位），如果出错时必须返回 -1。</p>
+<p><strong>getSize</strong> 必须返回流中包含的数据的总大小（以字节为单位），如果出错时必须返回 -1。</p>
+<p>要创建自己的工作流，你必须根据这四个函数的要求实现它们中的每一个。</p>
+<h1 id="使用输出流"><a href="#使用输出流" class="headerlink" title="使用输出流"></a>使用输出流</h1><p>使用自定义流类非常简单：实例化它，并将其传递给要加载的对象的（或）函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sf::FileStream stream;</span><br><span class="line">stream.<span class="built_in">open</span>(<span class="string">&quot;image.png&quot;</span>);</span><br><span class="line"></span><br><span class="line">sf::Texture texture;</span><br><span class="line">texture.<span class="built_in">loadFromStream</span>(stream);</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -284,13 +272,23 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/SFML/" rel="tag"># SFML</a>
-              <a href="/tags/window-module/" rel="tag"># window module</a>
+              <a href="/tags/system-module/" rel="tag"># system module</a>
           </div>
 
         
 
 
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Threads/" rel="prev" title="预备知识(Threads)">
+      <i class="fa fa-chevron-left"></i> 预备知识(Threads)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Drawing-2D-stuff/" rel="next" title="预备知识(Drawing 2D stuff)">
+      预备知识(Drawing 2D stuff) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -348,7 +346,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AAWindows"><span class="nav-number">1.</span> <span class="nav-text">打开一个Windows</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A7%E8%A1%8Cwindows"><span class="nav-number">2.</span> <span class="nav-text">执行windows</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">输入流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BE%93%E5%87%BA%E6%B5%81"><span class="nav-number">3.</span> <span class="nav-text">使用输出流</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -363,14 +361,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -481,5 +485,13 @@
 
   
 
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
 </body>
 </html>

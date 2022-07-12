@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -199,7 +199,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">预备知识(Opening and managing a SFML window)</a>
+            <a href="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/" class="post-title-link" itemprop="url">预备知识(Sprites and textures)</a>
         </h2>
 
         <div class="post-meta">
@@ -210,7 +210,709 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-09 16:18:05 / 修改时间：17:36:03" itemprop="dateCreated datePublished" datetime="2022-07-09T16:18:05+08:00">2022-07-09</time>
+              <time title="创建时间：2022-07-12 16:06:13 / 修改时间：16:11:51" itemprop="dateCreated datePublished" datetime="2022-07-12T16:06:13+08:00">2022-07-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="它们是什么？"><a href="#它们是什么？" class="headerlink" title="它们是什么？"></a>它们是什么？</h1><p>texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。</p>
+<p>sprite只不过是一个纹理矩形。</p>
+<p><img src="/./%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png" alt="graphics-sprites-definition"></p>
+<p>这就是<code>Sprite and texture</code>。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Drawing-2D-stuff/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Drawing-2D-stuff/" class="post-title-link" itemprop="url">预备知识(Drawing 2D stuff)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-12 09:44:09 / 修改时间：10:04:20" itemprop="dateCreated datePublished" datetime="2022-07-12T09:44:09+08:00">2022-07-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-draw.php">Drawing 2D stuff (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<p>SFML提供了一个图形模块，它将帮助您以比OpenGL更简单的方式绘制2D实体。</p>
+<h1 id="绘制窗口"><a href="#绘制窗口" class="headerlink" title="绘制窗口"></a>绘制窗口</h1><p>若要绘制图形模块提供的图元，必须使用专用窗口类：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderWindow.php"><code>sf::RenderWindow</code></a>。此类派生自 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf::Window</code></a>，并继承其所有函数。您学到的有关 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf::Window</code></a> 的所有内容（创建、事件处理、控制帧速率、与 OpenGL 混合等）也适用于 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderWindow.php"><code>sf::RenderWindow</code></a>。</p>
+<p>除此之外，<code>sf::RenderWindow</code>还添加了高级函数来帮助您轻松绘制。在本教程中，我们将重点介绍其中两个函数：<code>clear</code> and <code>draw</code>。它们就像其名称所暗示的那样简单：clear用所选颜色清除整个窗口，并用draw绘制您传递给它的任何对象。</p>
+<p>以下是渲染窗口中典型的主循环的外观：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/Graphics.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建窗口</span></span><br><span class="line">    <span class="function">sf::RenderWindow <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;My window&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只要窗口打开就运行程序</span></span><br><span class="line">    <span class="keyword">while</span> (window.<span class="built_in">isOpen</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 检查自上次循环迭代以来触发的所有窗口事件</span></span><br><span class="line">        sf::Event event;</span><br><span class="line">        <span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// &quot;close requested&quot; event: 关闭窗口</span></span><br><span class="line">            <span class="keyword">if</span> (event.type == sf::Event::Closed)</span><br><span class="line">                window.<span class="built_in">close</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用黑色清除窗口</span></span><br><span class="line">        window.<span class="built_in">clear</span>(sf::Color::Black);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// draw everything here...</span></span><br><span class="line">        <span class="comment">// window.draw(...);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 结束当前帧</span></span><br><span class="line">        window.<span class="built_in">display</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>必须在绘制任何内容之前<code>clear</code>，否则之前帧中的内容将显示在您绘制的任何内容后面。唯一的例外是，当您用绘制的内容覆盖整个窗口时，没有像素不会被绘制到。在这种情况下，您可以避免调用<code>clear</code>（尽管它不会对性能产生明显影响）。</p>
+<p>调用显示也是必需的，它将自上次调用以来绘制的内容显示并显示在窗口上。事实上，事物不是直接绘制到窗口，而是绘制到隐藏的缓冲区。当您调用display时，这个缓冲区会被复制到窗口中，这称为双缓冲。</p>
+<h1 id="现在可以画什么？"><a href="#现在可以画什么？" class="headerlink" title="现在可以画什么？"></a>现在可以画什么？</h1><p>SFML 提供了四种可绘制实体：其中三种已准备就绪（<em>子画面</em>、<em>文本</em>和<em>形状</em>），最后一种是构建基块，可帮助您创建自己的可绘制实体（<em>顶点数组</em>）。</p>
+<p>尽管它们具有一些共同的属性，但这些实体中的每一个都有自己的细微差别，因此在专门的教程中进行了解释：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-sprite.php">Sprite tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-text.php">Text tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-shape.php">Shape tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php">Vertex array tutorial</a></li>
+</ul>
+<h1 id="屏幕外绘图"><a href="#屏幕外绘图" class="headerlink" title="屏幕外绘图"></a>屏幕外绘图</h1><p>SFML 还提供了一种绘制到纹理而不是直接绘制到窗口的方法。为此，请使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderTexture.php"><code>sf::RenderTexture</code></a> 而不是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderWindow.php"><code>sf::RenderWindow</code></a>。它具有相同的绘图功能，继承自其公共基础：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderTarget.php"><code>sf::RenderTarget</code></a>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个 500x500 的渲染纹理</span></span><br><span class="line">sf::RenderTexture renderTexture;</span><br><span class="line"><span class="keyword">if</span> (!renderTexture.<span class="built_in">create</span>(<span class="number">500</span>, <span class="number">500</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 错误</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绘图使用相同的功能</span></span><br><span class="line">renderTexture.<span class="built_in">clear</span>();</span><br><span class="line">renderTexture.<span class="built_in">draw</span>(sprite); <span class="comment">// 或任何其他可绘制的</span></span><br><span class="line">renderTexture.<span class="built_in">display</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取目标纹理（已经绘制了东西的地方）</span></span><br><span class="line"><span class="type">const</span> sf::Texture&amp; texture = renderTexture.<span class="built_in">getTexture</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将其绘制到窗口</span></span><br><span class="line"><span class="function">sf::Sprite <span class="title">sprite</span><span class="params">(texture)</span></span>;</span><br><span class="line">window.<span class="built_in">draw</span>(sprite);</span><br></pre></td></tr></table></figure>
+
+<p><code>getTexture</code>函数返回只读纹理，这意味着您只能使用它，而不能修改它。如果您需要在使用它之前对其进行修改，则可以将其复制到您自己的 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a> 实例并进行修改。&#96;&#96;</p>
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderTexture.php"><code>sf::RenderTexture</code></a> 还具有与 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderWindow.php"><code>sf::RenderWindow</code></a> 相同的函数，用于处理视图和 OpenGL。如果使用 OpenGL 绘制到渲染纹理，则可以使用<code>create</code>函数的第三个可选参数请求创建深度缓冲区。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">renderTexture.<span class="built_in">create</span>(<span class="number">500</span>, <span class="number">500</span>, <span class="literal">true</span>); <span class="comment">// 启用深度缓冲区</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="从线程绘制"><a href="#从线程绘制" class="headerlink" title="从线程绘制"></a>从线程绘制</h1><p>SFML支持多线程绘图，您甚至不需要做任何事情就可以使其工作。唯一要记住的是在另一个线程中使用窗口之前先停用它。这是因为一个窗口（更准确地说是它的OpenGL上下文）不能同时在多个线程中处于活动状态。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">renderingThread</span><span class="params">(sf::RenderWindow* window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 激活窗口的环境</span></span><br><span class="line">    window-&gt;<span class="built_in">setActive</span>(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 渲染循环</span></span><br><span class="line">    <span class="keyword">while</span> (window-&gt;<span class="built_in">isOpen</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 绘制...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 结束当前帧</span></span><br><span class="line">        window-&gt;<span class="built_in">display</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建窗口（记住：由于操作系统限制，在主线程中创建它更安全）</span></span><br><span class="line">    <span class="function">sf::RenderWindow <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;OpenGL&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 停用其 OpenGL 环境</span></span><br><span class="line">    window.<span class="built_in">setActive</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动渲染线程</span></span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;renderingThread, &amp;window)</span></span>;</span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 事件/逻辑/任何循环</span></span><br><span class="line">    <span class="keyword">while</span> (window.<span class="built_in">isOpen</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-User-data-streams/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-User-data-streams/" class="post-title-link" itemprop="url">预备知识(User data streams)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-11 17:32:10 / 修改时间：17:41:53" itemprop="dateCreated datePublished" datetime="2022-07-11T17:32:10+08:00">2022-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-stream.php">User data streams (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>SFML有几个资源类：图像，字体，声音等。在大多数程序中，这些资源将借助其功能从文件加载。在其他一些情况下，资源将直接打包到可执行文件或大数据文件中，并使用 从内存中加载。这些函数<em>几乎</em>涵盖了所有可能的用例，但不是全部。</p>
+<p>有时，您希望从不寻常的位置加载文件，例如压缩&#x2F;加密的存档或远程网络位置。对于这些特殊情况，SFML 提供了第三个加载函数：。此函数使用抽象的 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1InputStream.php"><code>sf::InputStream</code></a> 接口读取数据，该接口允许您提供自己的与 SFML 配合使用的流类的实现。</p>
+<h1 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1InputStream.php"><code>sf::InputStream</code></a> 类声明了四个虚函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">InputStream</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">InputStream</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">read</span><span class="params">(<span class="type">void</span>* data, Int64 size)</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">seek</span><span class="params">(Int64 position)</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">tell</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> Int64 <span class="title">getSize</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>read</strong> 必须从流中提取<em>数据的大小</em>字节，并将它们复制到提供<em>的数据</em>地址。它返回读取的字节数，或在出错时返回 -1。</p>
+<p><strong>Seek</strong>必须更改流中的当前读取位置。其<em>位置</em>参数是要跳转到的绝对字节偏移量（因此它是相对于数据的开头，而不是相对于当前位置）。它返回新位置，或在出错时返回 -1。</p>
+<p><strong>tell</strong> 必须返回流中的当前读取位置（以字节为单位），如果出错时必须返回 -1。</p>
+<p><strong>getSize</strong> 必须返回流中包含的数据的总大小（以字节为单位），如果出错时必须返回 -1。</p>
+<p>要创建自己的工作流，你必须根据这四个函数的要求实现它们中的每一个。</p>
+<h1 id="使用输出流"><a href="#使用输出流" class="headerlink" title="使用输出流"></a>使用输出流</h1><p>使用自定义流类非常简单：实例化它，并将其传递给要加载的对象的（或）函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sf::FileStream stream;</span><br><span class="line">stream.<span class="built_in">open</span>(<span class="string">&quot;image.png&quot;</span>);</span><br><span class="line"></span><br><span class="line">sf::Texture texture;</span><br><span class="line">texture.<span class="built_in">loadFromStream</span>(stream);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Threads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Threads/" class="post-title-link" itemprop="url">预备知识(Threads)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-11 16:33:03 / 修改时间：17:32:37" itemprop="dateCreated datePublished" datetime="2022-07-11T16:33:03+08:00">2022-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-thread.php">Threads (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="线程是什么？"><a href="#线程是什么？" class="headerlink" title="线程是什么？"></a>线程是什么？</h1><p>线程基本上是与其他线程并行运行的一系列指令。每个程序都由至少一个线程组成：主线程运行你的函数。仅使用主线程的程序是单线程的，如果添加一个或多个线程，它们将变为多线程。</p>
+<p>简而言之，线程是一种同时执行多项操作的方法。例如，这对于在加载图像或声音时显示动画和对用户输入做出反应非常有用。线程也广泛用于网络编程，等待数据接收，同时继续更新和绘制应用程序。</p>
+<h1 id="使用SFML创建线程"><a href="#使用SFML创建线程" class="headerlink" title="使用SFML创建线程"></a>使用SFML创建线程</h1><p>可以在 SFML 中创建线程的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a>，下面是它在操作中的样子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/System.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 此函数在调用 thread.launch()时启动</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m thread number one&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个以 func()作为入口点的线程</span></span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 运行它</span></span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 主线程继续运行...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m the main thread&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此代码中，两者都在调用后并行运行。结果是，来自这两个函数的文本应该在控制台中混合。</p>
+<p>线程启动时将运行的函数必须传递给 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 的构造函数。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a>试图灵活并接受各种各样的入口点：非成员或成员函数，有或没有参数，仿函数（Functor）等。上面的示例显示了如何使用非成员函数，下面是一些其他示例。</p>
+<p>- 具有一个参数的非成员函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func, <span class="number">5</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>-成员函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">MyClass object;</span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;MyClass::func, &amp;object)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>-仿函数（函数对象）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">MyFunctor</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(MyFunctor())</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后一个使用函子的示例是最强大的示例，因为它可以接受任何类型的函子，因此使 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 与许多不直接支持的函数类型兼容。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// with lambdas</span></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">([]()&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">    std::cout &lt;&lt; <span class="string">&quot;I am in thread!&quot;</span> &lt;&lt; std::endl;</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// with std::bind</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(std::string, <span class="type">int</span>, <span class="type">double</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(std::bind(&amp;func, <span class="string">&quot;hello&quot;</span>, <span class="number">24</span>, <span class="number">0.5</span>))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果要在类中使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a>，请不要忘记它没有默认构造函数。因此，您必须直接在构造函数的<em>初始化列表中对其进行初始化</em>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ClassWithThread</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ClassWithThread</span>()</span><br><span class="line">    : <span class="built_in">m_thread</span>(&amp;ClassWithThread::f, <span class="keyword">this</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sf::Thread m_thread;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果确实需要在构造 owner 对象<em>后</em>构造 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 实例，还可以通过在堆上动态分配来延迟其构造。</p>
+<h1 id="开始线程"><a href="#开始线程" class="headerlink" title="开始线程"></a>开始线程</h1><p>创建 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 实例后，必须使用函数<code>launch</code>启动它。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line">thread.<span class="built_in">launch</span>();</span><br></pre></td></tr></table></figure>
+
+<p><code>launch</code>调用您在新线程中传递给构造函数的函数，并立即返回，以便调用线程可以继续运行。</p>
+<h1 id="停止线程"><a href="#停止线程" class="headerlink" title="停止线程"></a>停止线程</h1><p>当线程的入口点函数返回时，线程会自动停止。如果要等待一个线程从另一个线程完成，可以调用wait函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开始线程</span></span><br><span class="line">thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻塞执行直到线程完成</span></span><br><span class="line">thread.<span class="built_in">wait</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="暂停线程"><a href="#暂停线程" class="headerlink" title="暂停线程"></a>暂停线程</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf：：Thread</code></a> 中没有允许另一个线程暂停它的函数，暂停线程的唯一方法是从它运行的代码中执行此操作。换句话说，您只能暂停当前线程。为此，您可以调用该函数：<code>sf::sleep</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    sf::<span class="built_in">sleep</span>(sf::<span class="built_in">milliseconds</span>(<span class="number">10</span>));</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>sf::sleep</code>有一个参数，那就是睡觉的时间。此持续时间可以使用任何单位&#x2F;精度给出，如<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-time.php">时间教程</a>中所示。<br>请注意，您可以使用此函数使任何线程进入睡眠状态，即使是主线程。</p>
+<p><code>sf::sleep</code>是暂停线程的最有效方法：只要线程进入睡眠状态，就不需要 CPU。基于活动等待的暂停，如空循环，将消耗100%的CPU什么都不做。但是，请记住，睡眠持续时间只是一个提示，根据操作系统的不同，它将或多或少地准确。因此，不要依赖它来获得非常精确的时间。</p>
+<h1 id="保护共享数据"><a href="#保护共享数据" class="headerlink" title="保护共享数据"></a>保护共享数据</h1><p>程序中的所有线程共享相同的内存，它们可以访问其所在范围内的所有变量。这非常方便，但也很危险：由于线程并行运行，这意味着可以同时从多个线程同时使用变量或函数。如果操作不是线程安全的，则可能导致未定义的行为（即，它可能会崩溃或损坏数据）。</p>
+<p>有几种编程工具可帮助您保护共享数据并使代码线程安全，这些工具称为同步基元。常见的是互斥锁，信号量，条件变量和自旋锁。它们都是同一概念的变体：它们通过仅允许某些线程访问代码而阻止其他线程来保护代码段。</p>
+<p>最基本（和使用的）基元是互斥体。Mutex代表“MUTual EXclusion”：它确保只有一个线程能够运行它所保护的代码。让我们看看他们如何为上面的示例带来一些秩序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/System.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line">sf::Mutex mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mutex.<span class="built_in">lock</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m thread number one&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    mutex.<span class="built_in">unlock</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;func)</span></span>;</span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line"></span><br><span class="line">    mutex.<span class="built_in">lock</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;I&#x27;m the main thread&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    mutex.<span class="built_in">unlock</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此代码使用共享资源 （），正如我们所看到的，它会产生不需要的结果 - 所有内容都在控制台中混合。为了确保正确打印完整的行而不是随机混合，我们使用互斥锁保护代码的相应区域。</p>
+<p>到达其行的第一个线程成功锁定互斥体，直接访问其后面的代码并打印其文本。当另一个线程到达其行时，互斥体已被锁定，因此线程被置于休眠状态（例如，休眠线程不会消耗 CPU 时间）。当第一个线程最终解锁互斥体时，第二个线程将被唤醒，并允许锁定互斥体并打印其文本块。这会导致文本行按顺序显示在控制台中，而不是混合出现。</p>
+<p>互斥体不是可用于保护共享变量的唯一基元，如果你的应用程序使用线程执行复杂的操作，寻找具有更多功能的真正线程库。</p>
+<h1 id="保护互斥锁"><a href="#保护互斥锁" class="headerlink" title="保护互斥锁"></a>保护互斥锁</h1><p>为了确保互斥锁始终在可能引发异常的环境中解锁，SFML 提供了一个 RAII 类来包装它们：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Lock.php"><code>sf::Lock</code></a>。它在其构造函数中锁定互斥体，并在其析构函数中将其解锁。简单高效。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sf::Mutex mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Lock <span class="title">lock</span><span class="params">(mutex)</span></span>; <span class="comment">// mutex.lock()</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">functionThatMightThrowAnException</span>(); <span class="comment">// mutex.unlock() 如果这个函数抛出</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="comment">// mutex.unlock()</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Lock.php"><code>sf::Lock</code></a> 在具有多个语句的函数中也很有用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sf::Mutex mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Lock <span class="title">lock</span><span class="params">(mutex)</span></span>; <span class="comment">// mutex.lock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!image1.<span class="built_in">loadFromFile</span>(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// mutex.unlock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!image2.<span class="built_in">loadFromFile</span>(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// mutex.unlock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!image3.<span class="built_in">loadFromFile</span>(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// mutex.unlock()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="comment">// mutex.unlock()</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h1><p>程序员经常忽略的一件事是，如果没有相应的<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf：：Thread</code></a>实例，线程就无法生存。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">startThread</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Thread <span class="title">thread</span><span class="params">(&amp;funcToRunInThread)</span></span>;</span><br><span class="line">    thread.<span class="built_in">launch</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">startThread</span>();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写此类代码的程序员希望函数启动一个线程，该线程将独立存在，并在线程化函数结束时被销毁。事实并非如此。线程化函数似乎阻塞了主线程，就好像线程不起作用一样。</p>
+<p>这是什么原因造成的？<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 实例是函数的本地实例，因此当函数返回时，会立即销毁。调用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Thread.php"><code>sf::Thread</code></a> 的析构函数，正如我们上面所了解的那样，调用它，结果是主线程阻塞并等待线程函数完成，而不是继续并行运行。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Handling-time/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Handling-time/" class="post-title-link" itemprop="url">预备知识(Handling time)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-11 08:32:20 / 修改时间：09:35:20" itemprop="dateCreated datePublished" datetime="2022-07-11T08:32:20+08:00">2022-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="SFML中的时间"><a href="#SFML中的时间" class="headerlink" title="SFML中的时间"></a>SFML中的时间</h1><p>与许多其他时间是 uint32 毫秒数或浮点数秒数的库不同，SFML 不会对时间值施加任何特定的单位或类型。相反，它通过一个灵活的类将这个选择留给用户：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Time.php"><code>sf::Time</code></a>。所有操作时间值的 SFML 类和函数都使用此类。</p>
+<p>sf::Time 表示一个时间段（换句话说，两个事件之间经过的时间）。它不是一个日期时间类，它将当前年&#x2F;月&#x2F;日&#x2F;小时&#x2F;分钟&#x2F;秒表示为时间戳，它只是一个表示一定时间量的值，如何解释它取决于使用它的上下文。</p>
+<h1 id="转换时间"><a href="#转换时间" class="headerlink" title="转换时间"></a>转换时间</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Time.php"><code>sf::Time</code></a> 值可以从不同的源单位构造：秒、毫秒和微秒。有一个（非成员）函数可以将它们中的每一个转换为<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Time.php"><code>sf::Time</code></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sf::Time t1 = sf::<span class="built_in">microseconds</span>(<span class="number">10000</span>);</span><br><span class="line">sf::Time t2 = sf::<span class="built_in">milliseconds</span>(<span class="number">10</span>);</span><br><span class="line">sf::Time t3 = sf::<span class="built_in">seconds</span>(<span class="number">0.01f</span>);</span><br></pre></td></tr></table></figure>
+
+<p>请注意，这三个时间都是相等的。</p>
+<p>同样，<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Time.php"><code>sf::Time</code></a> 可以转换回秒、毫秒或微秒：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sf::Time time = ...;</span><br><span class="line"></span><br><span class="line">sf::Int64 usec = time.<span class="built_in">asMicroseconds</span>();</span><br><span class="line">sf::Int32 msec = time.<span class="built_in">asMilliseconds</span>();</span><br><span class="line"><span class="type">float</span>     sec  = time.<span class="built_in">asSeconds</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用时间值"><a href="#使用时间值" class="headerlink" title="使用时间值"></a>使用时间值</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Time.php"><code>sf::时间</code></a>只是一个时间量，所以它支持算术运算，如加法，减法，比较等。时间也可能是负数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sf::Time t1 = ...;</span><br><span class="line">sf::Time t2 = t1 * <span class="number">2</span>;</span><br><span class="line">sf::Time t3 = t1 + t2;</span><br><span class="line">sf::Time t4 = -t3;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> b1 = (t1 == t2);</span><br><span class="line"><span class="type">bool</span> b2 = (t3 &gt; t4);</span><br></pre></td></tr></table></figure>
+
+<h1 id="测量时间"><a href="#测量时间" class="headerlink" title="测量时间"></a>测量时间</h1><p>SFML有一个非常简单的时间来测量时间的类：sf::Clock。它只有两个函数：<code>getElapsed</code>、<code>Timerestart</code>检索自时钟启动以来经过的时间，以及重新启动时钟。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sf::Clock clock; <span class="comment">// 启动时钟</span></span><br><span class="line">...</span><br><span class="line">sf::Time elapsed1 = clock.<span class="built_in">getElapsedTime</span>();</span><br><span class="line">std::cout &lt;&lt; elapsed1.<span class="built_in">asSeconds</span>() &lt;&lt; std::endl;</span><br><span class="line">clock.<span class="built_in">restart</span>();</span><br><span class="line">...</span><br><span class="line">sf::Time elapsed2 = clock.<span class="built_in">getElapsedTime</span>();</span><br><span class="line">std::cout &lt;&lt; elapsed2.<span class="built_in">asSeconds</span>() &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+<p>下面是一个示例，它使用游戏循环的每次迭代所经过的时间来更新游戏逻辑</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sf::Clock clock;</span><br><span class="line"><span class="keyword">while</span> (window.<span class="built_in">isOpen</span>())</span><br><span class="line">&#123;</span><br><span class="line">    sf::Time elapsed = clock.<span class="built_in">restart</span>();</span><br><span class="line">    <span class="built_in">updateGame</span>(elapsed);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Keyboard-and-mouse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/11/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Keyboard-and-mouse/" class="post-title-link" itemprop="url">预备知识(Keyboard and mouse)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-11 07:44:12 / 修改时间：08:31:57" itemprop="dateCreated datePublished" datetime="2022-07-11T07:44:12+08:00">2022-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-inputs.php">Keyboard, mouse and joystick (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="键盘（Keyboard）"><a href="#键盘（Keyboard）" class="headerlink" title="键盘（Keyboard）"></a>键盘（Keyboard）</h1><p>提供对键盘状态的访问的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php"><code>sf::Keyboard</code></a>。它只包含一个函数，用于检查键的当前状态（按下或释放）。它是一个静态函数，因此您无需实例化 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php"><code>sf::Keyboard</code></a> 即可使用它。</p>
+<p>此函数直接读取键盘状态，忽略窗口的焦点状态。这意味着即使您的窗口处于非活动状态，也可能返回 <code>true</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sf::Keyboard::<span class="built_in">isKeyPressed</span>(sf::Keyboard::Left))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 按下左键：移动我们的角色</span></span><br><span class="line">    character.<span class="built_in">move</span>(<span class="number">1.f</span>, <span class="number">0.f</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标（Mouse）"><a href="#鼠标（Mouse）" class="headerlink" title="鼠标（Mouse）"></a>鼠标（Mouse）</h1><p>提供对鼠标状态的访问的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Mouse.php"><code>sf::Mouse</code></a>。像它的朋友<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php"><code>sf::Keyboard</code></a>一样，<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Mouse.php"><code>sf::Mouse</code></a>只包含静态函数，并不意味着要实例化（SFML暂时只处理一个鼠标）。</p>
+<p>以下可以检查是否按下了按钮：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sf::Mouse::<span class="built_in">isButtonPressed</span>(sf::Mouse::Left))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 按下鼠标左键：射击</span></span><br><span class="line">    gun.<span class="built_in">fire</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>鼠标按钮代码在<code>sf::Mouse::Button enum</code>中定义。SFML最多支持5个按钮：左、右、中（轮子）和两个附加按钮。</p>
+<p>以下可以获取并设置鼠标相对于桌面或窗口的当前位置：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取全局鼠标位置（相对于桌面）</span></span><br><span class="line">sf::Vector2i globalPosition = sf::Mouse::<span class="built_in">getPosition</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取本地鼠标位置（相对于窗口）</span></span><br><span class="line">sf::Vector2i localPosition = sf::Mouse::<span class="built_in">getPosition</span>(window); </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局设置鼠标位置（相对于桌面）</span></span><br><span class="line">sf::Mouse::<span class="built_in">setPosition</span>(sf::<span class="built_in">Vector2i</span>(<span class="number">10</span>, <span class="number">50</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在本地设置鼠标位置（相对于窗口）</span></span><br><span class="line">sf::Mouse::<span class="built_in">setPosition</span>(sf::<span class="built_in">Vector2i</span>(<span class="number">10</span>, <span class="number">50</span>), window); </span><br></pre></td></tr></table></figure>
+
+<p>没有读取鼠标滚轮当前状态的功能。由于车轮只能相对移动，因此没有可查询的绝对状态。通过看一个键，你可以判断它是被按下还是被释放。通过观察鼠标光标，您可以知道它在屏幕上的位置。然而，看着鼠标滚轮并不能告诉你它在哪个“滴答”上。您只能在它移动时收到通知（<code>MouseWheelScrolled</code>事件）。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/" class="post-title-link" itemprop="url">预备知识(Events explained)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-09 20:03:03" itemprop="dateCreated datePublished" datetime="2022-07-09T20:03:03+08:00">2022-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-10 19:19:11" itemprop="dateModified" datetime="2022-07-10T19:19:11+08:00">2022-07-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-events.php#the-mousebuttonpressed-and-mousebuttonreleased-events">Events explained (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h1><p> <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::Event</code></a>是一个<em>联合</em>，这意味着一次只有一个成员有效(联合的所有成员共享相同的内存空间)。有效成员是与事件类型匹配的成员，例如event。按键事件的按键。尝试读取任何其他成员将导致未定义的行为（很可能是随机或无效值）。</p>
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::事件</code></a>实例由 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf::Window</code></a> 类的<code>pollEvent</code>(或<code>waitEvent</code>)函数填充。只有这两个函数可以生成有效的事件，任何尝试使用成功调用（或）未返回的<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::Event</code></a>都将导致与上面提到的相同的未定义行为。</p>
+<p>典型的事件循环：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">sf::Event event;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 检查事件种类</span></span><br><span class="line">    <span class="keyword">switch</span> (event.type)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 窗口关闭</span></span><br><span class="line">        <span class="keyword">case</span> sf::Event::Closed:</span><br><span class="line">            window.<span class="built_in">close</span>();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 按键按下</span></span><br><span class="line">        <span class="keyword">case</span> sf::Event::KeyPressed:</span><br><span class="line">            ...</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 不处理其他类型的事件</span></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="已关闭事件（The-Closed-event）"><a href="#已关闭事件（The-Closed-event）" class="headerlink" title="已关闭事件（The Closed event）"></a>已关闭事件（The Closed event）</h1><p>当用户想要关闭窗口时，通过窗口管理器提供的任何可能的方法（“关闭”按钮，键盘快捷键等）触发该事件。此事件仅表示关闭请求，收到事件时窗口尚未关闭。</p>
+<p>典型的代码将仅响应此事件进行调用，以实际关闭窗口。但是，您可能还希望先执行其他操作，例如保存当前应用程序状态或询问用户要执行的操作。如果您不执行任何操作，窗口将保持打开状态。</p>
+<p>sf::Event联合中没有与此事件关联的成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::Closed)</span><br><span class="line">    window.<span class="built_in">close</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="已调整大小事件（The-Resized-event）"><a href="#已调整大小事件（The-Resized-event）" class="headerlink" title="已调整大小事件（The Resized event）"></a>已调整大小事件（The Resized event）</h1><p>当通过用户操作或通过调用<code>window.setSize</code>以编程方式调整窗口大小时将触发该事件来设置大小。</p>
+<p>可以使用此事件来调整渲染设置：如果直接使用 OpenGL，则为视口，如果使用 sfml-graphics，则为当前视图。</p>
+<p>与此事件关联的成员是<code>event.size</code>。它包含窗口的新大小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::Resized)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new width: &quot;</span> &lt;&lt; event.size.width &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new height: &quot;</span> &lt;&lt; event.size.height &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="失去焦点和获得焦点事件（The-LostFocus-and-GainedFocus-events）"><a href="#失去焦点和获得焦点事件（The-LostFocus-and-GainedFocus-events）" class="headerlink" title="失去焦点和获得焦点事件（The LostFocus and GainedFocus events）"></a>失去焦点和获得焦点事件（The LostFocus and GainedFocus events）</h1><p>当窗口失去&#x2F;获得焦点时，会触发<code>sf::Event::LostFocus</code>和<code>sf::Event::GainedFocus</code>事件，这在用户切换当前活动窗口时发生。当窗口失焦时，它不会接收键盘事件。</p>
+<p>例如，如果您想在窗口处于非活动状态时暂停游戏，可以使用此事件。</p>
+<p>sf::Event联合中没有与这些事件关联的成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::LostFocus)</span><br><span class="line">    myGame.<span class="built_in">pause</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (event.type == sf::Event::GainedFocus)</span><br><span class="line">    myGame.<span class="built_in">resume</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="文本输入事件（The-TextEntered-event）"><a href="#文本输入事件（The-TextEntered-event）" class="headerlink" title="文本输入事件（The TextEntered event）"></a>文本输入事件（The TextEntered event）</h1><p>键入字符时会触发<code>sf::Event::TextEntered</code>事件。这不能与<code>KeyPressed</code>事件混淆,<code>TextEntered</code>解释用户输入并生成适当的可打印字符。例如，在法语键盘上按“^”然后按“e”将生成两个按键事件，但一个包含“ê”字符的<code>TextEntered</code>事件。它适用于操作系统提供的所有输入方法，即使是最具体或最复杂的输入方法。</p>
+<p>此事件通常用于捕获文本字段中的用户输入。</p>
+<p>与此事件关联的成员是<code>event</code>。文本，它包含输入字符的Unicode值。您可以将其直接放入sf::string中，也可以在确保其处于ASCII范围（0-127）后将其转换为字符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::TextEntered)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.text.unicode &lt; <span class="number">128</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;ASCII character typed: &quot;</span> &lt;&lt; <span class="built_in">static_cast</span>&lt;<span class="type">char</span>&gt;(event.text.unicode) &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于它们是Unicode标准的一部分，因此此事件会生成一些不可打印的字符，如backspace。在大多数情况下，您需要过滤掉它们。</p>
+<h1 id="释放-x2F-按下键盘键事件（The-KeyPressed-and-KeyReleased-events）"><a href="#释放-x2F-按下键盘键事件（The-KeyPressed-and-KeyReleased-events）" class="headerlink" title="释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）"></a>释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）</h1><p>当按下&#x2F;释放键盘键时，会触发<code>sf::Event::KeyPressed</code> 和<code>sf::Event::KeyReleased</code>事件。</p>
+<p>如果按住一个键，将以默认操作系统延迟（即，在文本编辑器中按住字母时应用的相同延迟）生成多个按键事件。要禁用重复的按键事件，可以调用<code>window.setKeyRepeatEnabled</code>（false）。另一方面，很明显，<code>KeyReleased</code>事件永远不会重复。</p>
+<p>有时，人们试图直接对按键事件做出反应，以实现平稳的运动。这样做不会产生预期的效果，因为当您按住一个键时，您只会得到几个事件（请记住，重复延迟）。要实现事件的平滑移动，必须使用一个布尔值，该布尔值在按下键时设置，在释放键时清除；然后，只要设置了布尔值，就可以移动（与事件无关）。另一个（更容易）实现平滑移动的解决方案是使用<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php"><code>sf::Keyboard</code></a> 的实时键盘输入（请参阅专用教程）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::KeyPressed)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.key.code == sf::Keyboard::Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;the escape key was pressed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;control:&quot;</span> &lt;&lt; event.key.control &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;alt:&quot;</span> &lt;&lt; event.key.alt &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;shift:&quot;</span> &lt;&lt; event.key.shift &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;system:&quot;</span> &lt;&lt; event.key.system &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标滚轮滚动事件（The-MouseWheelScrolled-event）"><a href="#鼠标滚轮滚动事件（The-MouseWheelScrolled-event）" class="headerlink" title="鼠标滚轮滚动事件（The MouseWheelScrolled event）"></a>鼠标滚轮滚动事件（The MouseWheelScrolled event）</h1><p>当鼠标滚轮向上或向下移动时，会触发<code>sf::Event::MouseWheelScrolled</code>事件，如果鼠标支持它，也会触发横向事件。</p>
+<p>与此事件关联的成员是 <code>event.mouseWheelScroll</code>, 它包含滚轮移动的刻度数、滚轮的方向以及鼠标光标的当前位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseWheelScrolled)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: vertical&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (event.mouseWheelScroll.wheel == sf::Mouse::HorizontalWheel)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: horizontal&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: unknown&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;wheel movement: &quot;</span> &lt;&lt; event.mouseWheelScroll.delta &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mouse x: &quot;</span> &lt;&lt; event.mouseWheelScroll.x &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mouse y: &quot;</span> &lt;&lt; event.mouseWheelScroll.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标按钮按下和释放事件（The-MouseButtonPressed-and-MouseButtonReleased-events）"><a href="#鼠标按钮按下和释放事件（The-MouseButtonPressed-and-MouseButtonReleased-events）" class="headerlink" title="鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）"></a>鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）</h1><p>按下&#x2F;释放鼠标按钮时，会触发<code>sf::Event::MouseButtonPressed</code>和<code>sf::Event::MouseButtonReleased</code>事件。</p>
+<p>SFML支持5个鼠标按钮：左、右、中（滚轮）、额外#1和额外#2（侧按钮）。</p>
+<p>与这些事件关联的成员是<code>event.mouseButton</code>。它包含按下&#x2F;释放按钮的代码，以及鼠标光标的当前位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseButtonPressed)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.mouseButton.button == sf::Mouse::Right)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;the right button was pressed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;mouse x: &quot;</span> &lt;&lt; event.mouseButton.x &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;mouse y: &quot;</span> &lt;&lt; event.mouseButton.y &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标移动事件（The-MouseMoved-event）"><a href="#鼠标移动事件（The-MouseMoved-event）" class="headerlink" title="鼠标移动事件（The MouseMoved event）"></a>鼠标移动事件（The MouseMoved event）</h1><p>当鼠标在窗口内移动时，将触发<code>sf::Event::MouseMoved</code>事件。</p>
+<p>即使窗口未聚焦，也会触发此事件。但是，只有当鼠标在窗口的内部区域内移动时才会触发，而不是在标题栏或边框上移动时。</p>
+<p>与此事件关联的成员是<code>event.mouseMove</code>，它包含鼠标光标相对于窗口的当前位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseMoved)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new mouse x: &quot;</span> &lt;&lt; event.mouseMove.x &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new mouse y: &quot;</span> &lt;&lt; event.mouseMove.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="鼠标进入和离开事件（The-MouseEntered-and-MouseLeft-event"><a href="#鼠标进入和离开事件（The-MouseEntered-and-MouseLeft-event" class="headerlink" title="鼠标进入和离开事件（The MouseEntered and MouseLeft event)"></a>鼠标进入和离开事件（The MouseEntered and MouseLeft event)</h1><p>当鼠标光标进入&#x2F;离开窗口时，会触发<code>sf::Event::MouseEntered</code>和<code>sf::Event::MouseLeft</code>事件。</p>
+<p><code>sf::Event</code>事件联合中没有与这些事件关联的成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseEntered)</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;the mouse cursor has entered the window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseLeft)</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;the mouse cursor has left the window&quot;</span> &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Opening-and-managing-a-SFML-window)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Opening-and-managing-a-SFML-window)/" class="post-title-link" itemprop="url">预备知识(Opening and managing a SFML window)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-09 16:18:05 / 修改时间：18:24:20" itemprop="dateCreated datePublished" datetime="2022-07-09T16:18:05+08:00">2022-07-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
             </span>
 
           
@@ -225,7 +927,7 @@
 
       
           <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-window.php">Opening and managing a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
-<h1 id="打开一个Windows"><a href="#打开一个Windows" class="headerlink" title="打开一个Windows"></a>打开一个Windows</h1><p>SFML中的窗口由sf：：Window类定义。可直接创建和打开窗口：</p>
+<h1 id="打开一个Window"><a href="#打开一个Window" class="headerlink" title="打开一个Window"></a>打开一个Window</h1><p>SFML中的窗口由sf：：Window类定义。可直接创建和打开窗口：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/Window.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Window <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;My window&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>第一个参数：定义了窗口的大小（宽度和高度），这里是800*600像素的窗口。</p>
@@ -263,7 +965,28 @@
 <td>默认样式（Titlebar|Resize|Close）</td>
 </tr>
 </tbody></table>
-<h1 id="执行windows"><a href="#执行windows" class="headerlink" title="执行windows"></a>执行windows</h1>
+<p>第四个参数（可选）：定义了OpenGL特定的选项，在<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-opengl.php">Using OpenGL in a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a>进行了详细的解释</p>
+<h1 id="使window有趣起来"><a href="#使window有趣起来" class="headerlink" title="使window有趣起来"></a>使window有趣起来</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/Window.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Window <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;My window&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果窗口是打开的，一直运行这个程序</span></span><br><span class="line">    <span class="keyword">while</span> (window.<span class="built_in">isOpen</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 检查自循环的上次迭代以来触发的所有窗口事件</span></span><br><span class="line">        sf::Event event;</span><br><span class="line">        <span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// &quot;close requested&quot; event: 关闭窗口</span></span><br><span class="line">            <span class="keyword">if</span> (event.type == sf::Event::Closed)</span><br><span class="line">                window.<span class="built_in">close</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码将打开一个窗口，并在用户关闭它时终止。</p>
+<p>首先，我们添加了一个<code>while</code>循环，控制窗口的不断更新，直到窗口关闭，我们一般称这个循环为主循环。</p>
+<p>我们在循环中做的第一件事就是检查发生的事件。对于窗口事件来说，我们通常用 <code>bool Window::pollEvent(sf::Event&amp; event)</code> 函数，如果有事件将要被使用的话，函数会返回 <code>true</code>， <code>event</code>参数会对应某个具体事件。这里再次使用了<code>while</code>循环，以便在有多个事件时同时处理所有挂起的事件。</p>
+<p>每当我们收到一个事件时，我们必须检查它的类型（窗口关闭？按键？鼠标移动？操纵杆已连接？…），如果我们对它感兴趣，就会做出相应的反应。在这种情况下，我们只关心事件，当用户想要关闭窗口时会触发该事件。此时，窗口仍处于打开状态，我们必须使用函数显式关闭它<code>event.type == sf::Event::Closed</code>。这使我们能够在窗口关闭之前执行某些操作，例如保存应用程序的当前状态或显示消息。</p>
+<h1 id="绘制window"><a href="#绘制window" class="headerlink" title="绘制window"></a>绘制window</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 改变窗口位置（相对于桌面）</span></span><br><span class="line">window.<span class="built_in">setPosition</span>(sf::<span class="built_in">Vector2i</span>(<span class="number">10</span>, <span class="number">50</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改变窗口的大小</span></span><br><span class="line">window.<span class="built_in">setSize</span>(sf::<span class="built_in">Vector2u</span>(<span class="number">640</span>, <span class="number">480</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更改窗口的标题</span></span><br><span class="line">window.<span class="built_in">setTitle</span>(<span class="string">&quot;SFML window&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取窗口大小</span></span><br><span class="line">sf::Vector2u size = window.<span class="built_in">getSize</span>();</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> width = size.x;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> height = size.y;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查窗口是否有焦点</span></span><br><span class="line"><span class="type">bool</span> focus = window.<span class="built_in">hasFocus</span>();</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>参考 API 文档，可以获取 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf：：Window</code></a> 函数的完整列表。</p>
+<h1 id="控制帧速率"><a href="#控制帧速率" class="headerlink" title="控制帧速率"></a>控制帧速率</h1><p>当应用程序运行得很快时，可能会有视觉伪影，例如撕裂。因为应用程序的刷新率与监视器的垂直频率不同步，所以前一帧的底部与下一帧的顶部混合在一起。</p>
+<p>可以激活<em>垂直同步</em>来解决这个问题。在如下调用之后，应用程序将以与监视器刷新率相同的频率运行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.<span class="built_in">setVerticalSyncEnabled</span>(<span class="literal">true</span>); <span class="comment">// 创建窗口后调用一次</span></span><br></pre></td></tr></table></figure>
+
+<p>想要应用程序以给定的帧速率运行，使用如下命令：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.<span class="built_in">setFramerateLimit</span>(<span class="number">60</span>); <span class="comment">// 创建窗口后调用一次</span></span><br></pre></td></tr></table></figure>
+
+<p>两者不可同时使用！</p>
+<h1 id="关于Window的一些注意事项"><a href="#关于Window的一些注意事项" class="headerlink" title="关于Window的一些注意事项"></a>关于Window的一些注意事项</h1><h2 id="可以创建多个线程"><a href="#可以创建多个线程" class="headerlink" title="可以创建多个线程"></a>可以创建多个线程</h2><p>SFML允许你创建多个窗口，并在主线程中处理它们，或者每个窗口在自己的线程中处理它们，但是不要忘记为每个窗口设置一个事件循环。</p>
+<h3 id="尚不支持多个显示器"><a href="#尚不支持多个显示器" class="headerlink" title="尚不支持多个显示器"></a>尚不支持多个显示器</h3><p>SFML 不会显式管理多个监视器。因此，你将无法选择窗口显示在哪个监视器上，并且无法创建多个全屏窗口。</p>
+<h3 id="在-Windows-上，大于桌面的窗口将无法正常运行"><a href="#在-Windows-上，大于桌面的窗口将无法正常运行" class="headerlink" title="在 Windows 上，大于桌面的窗口将无法正常运行"></a>在 Windows 上，大于桌面的窗口将无法正常运行</h3><p>出于某种原因，Windows不喜欢比桌面大的窗口。这包括使用创建的窗口：添加了窗口装饰（边框和标题栏），你最终会得到一个比桌面略大的窗口。</p>
+
       
     </div>
 
@@ -345,14 +1068,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -463,5 +1192,13 @@
 
   
 
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
 </body>
 </html>
