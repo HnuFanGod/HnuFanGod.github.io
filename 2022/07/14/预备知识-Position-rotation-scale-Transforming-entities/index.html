@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="官方文档：Position, rotation, scale: Transforming entities (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 转换SFML实体所有 SFML 类（子画面、文本、形状）都使用相同的转换接口：sf::Transformable。此基类提供了一个简单的 API 来移动、旋转和缩放实体。它没有提供">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预备知识(Position, rotation, scale: Transforming entities)">
+<meta property="og:url" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/index.html">
+<meta property="og:site_name" content="帆帆的BLOG">
+<meta property="og:description" content="官方文档：Position, rotation, scale: Transforming entities (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 转换SFML实体所有 SFML 类（子画面、文本、形状）都使用相同的转换接口：sf::Transformable。此基类提供了一个简单的 API 来移动、旋转和缩放实体。它没有提供">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-position.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-rotation.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-scale.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-bounds.png">
+<meta property="article:published_time" content="2022-07-14T07:55:09.000Z">
+<meta property="article:modified_time" content="2022-07-14T08:24:03.323Z">
+<meta property="article:author" content="一只小帆帆">
+<meta property="article:tag" content="SFML">
+<meta property="article:tag" content="Graghics module">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-position.png">
+
+<link rel="canonical" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>预备知识(Position, rotation, scale: Transforming entities) | 帆帆的BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">帆帆的BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          预备知识(Position, rotation, scale: Transforming entities)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-14 15:55:09 / 修改时间：16:24:03" itemprop="dateCreated datePublished" datetime="2022-07-14T15:55:09+08:00">2022-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-transform.php">Position, rotation, scale: Transforming entities (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="转换SFML实体"><a href="#转换SFML实体" class="headerlink" title="转换SFML实体"></a>转换SFML实体</h1><p>所有 SFML 类（子画面、文本、形状）都使用相同的转换接口：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Transformable.php"><code>sf::Transformable</code></a>。此基类提供了一个简单的 API 来移动、旋转和缩放实体。它没有提供最大的灵活性，而是定义了一个易于理解和使用的界面，它涵盖了所有用例的99% - 对于剩余的1%，请参阅最后一章。</p>
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Transformable.php"><code>sf::Transformable</code></a>（及其所有派生类）定义了四个属性：<strong>位置</strong>、<strong>旋转</strong>、<strong>缩放</strong>和<strong>原点</strong>。他们都有各自的获取者和二传手。这些转换组件都是相互独立的：如果要更改实体的方向，则只需设置其旋转属性，而不必关心当前位置和缩放。</p>
+<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的绝对位置</span></span><br><span class="line">entity.<span class="built_in">setPosition</span>(<span class="number">10.f</span>, <span class="number">50.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将实体相对于其当前位置移动</span></span><br><span class="line">entity.<span class="built_in">move</span>(<span class="number">5.f</span>, <span class="number">5.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的绝对位置</span></span><br><span class="line">sf::Vector2f position = entity.<span class="built_in">getPosition</span>(); <span class="comment">// = (15, 55)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-position.png" alt="graphics-transform-position"></p>
+<p>默认情况下，实体相对于其左上角的位置。</p>
+<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><p>以度为单位，按顺时针顺序定义（因为 Y 轴在 SFML 中指向下方）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的绝对旋转</span></span><br><span class="line">entity.<span class="built_in">setRotation</span>(<span class="number">45.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于其当前方向旋转实体</span></span><br><span class="line">entity.<span class="built_in">rotate</span>(<span class="number">10.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的绝对旋转</span></span><br><span class="line"><span class="type">float</span> rotation = entity.<span class="built_in">getRotation</span>(); <span class="comment">// = 55</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-rotation.png" alt="graphics-transform-rotation"></p>
+<p>调用getRotation时，SFML 始终返回范围 [0， 360） 中的角度</p>
+<p>与位置一样，默认情况下，旋转是围绕左上角执行的，但这可以通过设置原点来更改。</p>
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><p>比例因子允许调整实体的大小。默认比例为 1。将其设置为小于 1 的值会使实体变小，大于 1 会使实体变大。还允许使用负比例值，以便可以镜像实体。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的绝对比例</span></span><br><span class="line">entity.<span class="built_in">setScale</span>(<span class="number">4.f</span>, <span class="number">1.6f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于其当前规模缩放实体</span></span><br><span class="line">entity.<span class="built_in">scale</span>(<span class="number">0.5f</span>, <span class="number">0.5f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的绝对比例</span></span><br><span class="line">sf::Vector2f scale = entity.<span class="built_in">getScale</span>(); <span class="comment">// = (2, 0.8)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-scale.png" alt="graphics-transform-scale"></p>
+<h2 id="原点"><a href="#原点" class="headerlink" title="原点"></a>原点</h2><p>原点是其他三个变换的中心点。图元的位置是其原点的位置，其旋转围绕原点执行，并且缩放也相对于原点应用。默认情况下，它是实体的左上角（点 （0， 0））。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的原点</span></span><br><span class="line">entity.<span class="built_in">setOrigin</span>(<span class="number">10.f</span>, <span class="number">20.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的位置</span></span><br><span class="line">sf::Vector2f origin = entity.<span class="built_in">getOrigin</span>(); <span class="comment">// = (10, 20)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="定界框"><a href="#定界框" class="headerlink" title="定界框"></a>定界框</h1><p>转换实体并绘制它们之后，您可能希望使用它们执行一些计算，例如检查碰撞。</p>
+<p>SFML 实体可以为您提供其边界框。边界框是包含属于图元的所有点的最小矩形，其边与 X 轴和 Y 轴对齐。</p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-bounds.png" alt="graphics-transform-bounds"></p>
+<p>在实现碰撞检测时，边界框非常有用：可以非常快速地对点或另一个轴对齐矩形进行检查，并且其面积足够接近真实实体的面积以提供良好的近似值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检索实体的原点</span></span><br><span class="line">sf::FloatRect boundingBox = entity.<span class="built_in">getGlobalBounds</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查与点的碰撞</span></span><br><span class="line">sf::Vector2f point = ...;</span><br><span class="line"><span class="keyword">if</span> (boundingBox.<span class="built_in">contains</span>(point))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 碰撞！</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查与另一个框的碰撞（如另一个实体的边界框）</span></span><br><span class="line">sf::FloatRect otherBox = ...;</span><br><span class="line"><span class="keyword">if</span> (boundingBox.<span class="built_in">intersects</span>(otherBox))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 碰撞！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>getGlobalBounds</code>函数之所以这么命名，是因为它返回全局坐标系中实体的边界框，即在应用其所有变换（位置、旋转、缩放）之后</p>
+<p>还有另一个函数<code>getLocalBounds</code>返回实体在其<em>局部</em>坐标系中的边界框（在应用其变换之前）。例如，此函数可用于获取实体的初始大小，或执行更具体的计算。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SFML/" rel="tag"># SFML</a>
+              <a href="/tags/Graghics-module/" rel="tag"># Graghics module</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/" rel="prev" title="预备知识(Shape)">
+      <i class="fa fa-chevron-left"></i> 预备知识(Shape)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/" rel="next" title="预备知识(Controlling the 2D camera with views)">
+      预备知识(Controlling the 2D camera with views) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2SFML%E5%AE%9E%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">转换SFML实体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC"><span class="nav-number">1.2.</span> <span class="nav-text">旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.3.</span> <span class="nav-text">大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%82%B9"><span class="nav-number">1.4.</span> <span class="nav-text">原点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E7%95%8C%E6%A1%86"><span class="nav-number">2.</span> <span class="nav-text">定界框</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一只小帆帆"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">一只小帆帆</p>
+  <div class="site-description" itemprop="description">简介不了，慢慢观察</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一只小帆帆</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+</body>
+</html>

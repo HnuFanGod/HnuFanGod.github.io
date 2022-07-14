@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="官方文档：Controlling the 2D camera with views (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 什么是视图？在游戏中，关卡比窗口本身大得多的情况并不少见。你只看到其中的一小部分。在RPG，平台游戏和许多其他类型中通常都是这种情况。开发人员可能倾向于忘记的是，他们在2D世界中定义实体，而不是直接在窗口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预备知识(Controlling the 2D camera with views)">
+<meta property="og:url" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/index.html">
+<meta property="og:site_name" content="帆帆的BLOG">
+<meta property="og:description" content="官方文档：Controlling the 2D camera with views (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 什么是视图？在游戏中，关卡比窗口本身大得多的情况并不少见。你只看到其中的一小部分。在RPG，平台游戏和许多其他类型中通常都是这种情况。开发人员可能倾向于忘记的是，他们在2D世界中定义实体，而不是直接在窗口">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-initial.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-translated.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-rotated.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-scaled.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-viewport.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-split-screen.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-minimap.png">
+<meta property="article:published_time" content="2022-07-14T08:31:51.000Z">
+<meta property="article:modified_time" content="2022-07-14T09:07:02.111Z">
+<meta property="article:author" content="一只小帆帆">
+<meta property="article:tag" content="SFML">
+<meta property="article:tag" content="Graghics module">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-initial.png">
+
+<link rel="canonical" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>预备知识(Controlling the 2D camera with views) | 帆帆的BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">帆帆的BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          预备知识(Controlling the 2D camera with views)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-14 16:31:51 / 修改时间：17:07:02" itemprop="dateCreated datePublished" datetime="2022-07-14T16:31:51+08:00">2022-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-view.php">Controlling the 2D camera with views (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="什么是视图？"><a href="#什么是视图？" class="headerlink" title="什么是视图？"></a>什么是视图？</h1><p>在游戏中，关卡比窗口本身大得多的情况并不少见。你只看到其中的一小部分。在RPG，平台游戏和许多其他类型中通常都是这种情况。开发人员可能倾向于忘记的是，他们在<em>2D世界中</em>定义实体，而不是直接在窗口中定义实体。窗口只是一个视图，它显示了整个世界的特定区域。平行绘制同一世界的多个视图，或者将世界绘制到纹理而不是窗口是完全可以的。世界本身保持不变，变化的只是人们看待它的方式。</p>
+<p>由于在窗口中看到的内容只是整个2D世界的一小部分，因此您需要一种方法来指定窗口中显示世界的哪个部分。此外，您可能还希望定义此区域在<em>窗口中的显示</em>位置&#x2F;方式。这是 SFML 视图的两个主要功能。</p>
+<p>总而言之，如果要滚动、旋转或缩放世界，则需要视图。它们也是创建分屏和迷你地图的关键。</p>
+<h1 id="定义视图的查看区域"><a href="#定义视图的查看区域" class="headerlink" title="定义视图的查看区域"></a>定义视图的查看区域</h1><p>在 SFML 中封装视图的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1View.php"><code>sf：：View</code></a>。它可以直接使用要查看的区域的定义来构造：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用 2D 世界的矩形区域创建一个视图以显示</span></span><br><span class="line"><span class="function">sf::View <span class="title">view1</span><span class="params">(sf::FloatRect(<span class="number">200.f</span>, <span class="number">200.f</span>, <span class="number">300.f</span>, <span class="number">200.f</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个具有中心和大小的视图</span></span><br><span class="line"><span class="function">sf::View <span class="title">view2</span><span class="params">(sf::Vector2f(<span class="number">350.f</span>, <span class="number">300.f</span>), sf::Vector2f(<span class="number">300.f</span>, <span class="number">200.f</span>))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>这两个定义是等效的：两个视图将显示 2D 世界的相同区域，即以点 （350， 300） <em>为中心的</em> 300x200 矩形。</p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-initial.png" alt="graphics-view-initial"></p>
+<p>如果不想在构造时定义视图或以后要对其进行修改，则可以使用等效的 setter：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sf::View view1;</span><br><span class="line">view1.<span class="built_in">reset</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">200.f</span>, <span class="number">200.f</span>, <span class="number">300.f</span>, <span class="number">200.f</span>));</span><br><span class="line"></span><br><span class="line">sf::View view2;</span><br><span class="line">view2.<span class="built_in">setCenter</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">350.f</span>, <span class="number">300.f</span>));</span><br><span class="line">view2.<span class="built_in">setSize</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">200.f</span>, <span class="number">200.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p>定义视图后，您以对其进行变换，使其显示 2D 世界的平移&#x2F;旋转&#x2F;缩放版本。</p>
+<h2 id="移动（滚动）视图"><a href="#移动（滚动）视图" class="headerlink" title="移动（滚动）视图"></a>移动（滚动）视图</h2><p>视图始终由其中心操控（实体由左上角操控）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 移动视图到点 (200, 200) 处</span></span><br><span class="line">view.<span class="built_in">setCenter</span>(<span class="number">200.f</span>, <span class="number">200.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将视图移动 (100, 100) 的偏移量（因此它的最终位置是 (300, 300)）</span></span><br><span class="line">view.<span class="built_in">move</span>(<span class="number">100.f</span>, <span class="number">100.f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-translated.png" alt="graphics-view-translated"></p>
+<h2 id="旋转视图"><a href="#旋转视图" class="headerlink" title="旋转视图"></a>旋转视图</h2><p>使用<code>setRotation</code>函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将视图旋转 20 度</span></span><br><span class="line">view.<span class="built_in">setRotation</span>(<span class="number">20.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于当前方向将视图旋转 5 度（因此其最终方向为 25 度）</span></span><br><span class="line">view.<span class="built_in">rotate</span>(<span class="number">5.f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-rotated.png" alt="graphics-view-rotated"></p>
+<h2 id="缩放视图"><a href="#缩放视图" class="headerlink" title="缩放视图"></a>缩放视图</h2><p>使用<code>setSize</code>函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调整视图大小以显示 1200x800 区域（我们看到更大的区域，所以这是缩小）</span></span><br><span class="line">view.<span class="built_in">setSize</span>(<span class="number">1200.f</span>, <span class="number">800.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于当前大小缩放视图（应用因子 0.5，因此其最终大小为 600x400）</span></span><br><span class="line">view.<span class="built_in">zoom</span>(<span class="number">0.5f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-scaled.png" alt="graphics-view-scaled"></p>
+<h1 id="定义视图的查看方式"><a href="#定义视图的查看方式" class="headerlink" title="定义视图的查看方式"></a>定义视图的查看方式</h1><p>现在，您已经定义了在窗口中可以看到 2D 世界的哪个部分，让我们定义它的显示<em>位置</em>。默认情况下，查看的内容占据整个窗口。如果视图的大小与窗口相同，则所有内容都以 1：1 呈现。如果视图小于或大于窗口，则所有内容都将缩放以适合窗口。</p>
+<p>此默认行为适用于大多数情况，但有时可能需要更改。例如，要在多人游戏中拆分屏幕，您可能希望使用两个视图，每个视图仅占据窗口的一半。您还可以通过将整个世界绘制到在窗口角落的一小块区域中渲染的视图来实现小地图。显示视图内容的区域称为<em>视区</em>。</p>
+<p>要设置视图的视口，可以使用setViewport函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个居中的视口，窗口大小的一半</span></span><br><span class="line">view.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.25f</span>, <span class="number">0.25</span>, <span class="number">0.5f</span>, <span class="number">0.5f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-viewport.png" alt="graphics-view-viewport"></p>
+<p>视口不是以像素为单位定义的，而是以窗口大小的比率来定义的。</p>
+<p>使用视口，可以直接拆分多人游戏的屏幕：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 玩家1（屏幕左侧）</span></span><br><span class="line">player1View.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.f</span>, <span class="number">0.f</span>, <span class="number">0.5f</span>, <span class="number">1.f</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 玩家2（屏幕右侧）</span></span><br><span class="line">player2View.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.5f</span>, <span class="number">0.f</span>, <span class="number">0.5f</span>, <span class="number">1.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-split-screen.png" alt="graphics-view-split-screen"></p>
+<p>迷你地图：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 游戏视图（全窗口）</span></span><br><span class="line">gameView.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.f</span>, <span class="number">0.f</span>, <span class="number">1.f</span>, <span class="number">1.f</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 小地图（右上角）</span></span><br><span class="line">minimapView.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.75f</span>, <span class="number">0.f</span>, <span class="number">0.25f</span>, <span class="number">0.25f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-minimap.png" alt="graphics-view-minimap"></p>
+<h1 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h1><p>要使用视图绘制某些内容，必须在调用要绘制的目标（<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderWindow.php"><code>sf::RenderWindow</code></a>或<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderTexture.php"><code>sf::RenderTexture）</code></a>的函数<code>setView</code>后绘制它。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个视图</span></span><br><span class="line"><span class="function">sf::View <span class="title">view</span><span class="params">(sf::FloatRect(<span class="number">0.f</span>, <span class="number">0.f</span>, <span class="number">1000.f</span>, <span class="number">600.f</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 激活它</span></span><br><span class="line">window.<span class="built_in">setView</span>(view);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在那个视图上画一些东西</span></span><br><span class="line">window.<span class="built_in">draw</span>(some_sprite);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 想要进行可见性检查？ 检索视图</span></span><br><span class="line">sf::View currentView = window.<span class="built_in">getView</span>();</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>视图将保持活动状态，直到您设置另一个视图。这意味着总有一个视图来定义目标中显示的内容以及绘制位置。如果未显式设置任何视图，则呈现器目标将使用其自己的默认视图，该视图与其大小 1：1 匹配。你可以使用该函数获取呈现器目标的默认视图。如果要基于它定义自己的视图，或者还原它以在场景顶部绘制固定实体（如 GUI），这将非常有用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个默认视图一半大小的视图</span></span><br><span class="line">sf::View view = window.<span class="built_in">getDefaultView</span>();</span><br><span class="line">view.<span class="built_in">zoom</span>(<span class="number">0.5f</span>);</span><br><span class="line">window.<span class="built_in">setView</span>(view);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 恢复默认视图</span></span><br><span class="line">window.<span class="built_in">setView</span>(window.<span class="built_in">getDefaultView</span>());</span><br></pre></td></tr></table></figure>
+
+<p>每当您更新视图时，都需要再次调用<code>setView</code>以应用修改。</p>
+<h1 id="调整窗口大小时显示更多内容"><a href="#调整窗口大小时显示更多内容" class="headerlink" title="调整窗口大小时显示更多内容"></a>调整窗口大小时显示更多内容</h1><p>由于默认视图在创建窗口后永远不会更改，因此查看的内容始终相同。因此，当调整窗口大小时，所有内容都会被挤压&#x2F;拉伸到新大小。</p>
+<p>如果不想显示此默认行为，而是要根据窗口的新大小显示更多&#x2F;更少的内容，则只需使用窗口大小更新视图的大小即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 事件循环</span></span><br><span class="line">sf::Event event;</span><br><span class="line"><span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 捕捉调整大小事件</span></span><br><span class="line">    <span class="keyword">if</span> (event.type == sf::Event::Resized)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 将视图更新为窗口的新大小</span></span><br><span class="line">        <span class="function">sf::FloatRect <span class="title">visibleArea</span><span class="params">(<span class="number">0.f</span>, <span class="number">0.f</span>, event.size.width, event.size.height)</span></span>;</span><br><span class="line">        window.<span class="built_in">setView</span>(sf::<span class="built_in">View</span>(visibleArea));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="坐标转换"><a href="#坐标转换" class="headerlink" title="坐标转换"></a>坐标转换</h1><p>使用自定义视图时，或者在不使用上述代码的情况下调整窗口大小时，目标上显示的像素不再与 2D 世界中的单位匹配。例如，点击像素（10，50）可能会到达你世界的点（26.5，-84）。您最终必须使用转换函数<code>mapPixelToCoords</code>将像素坐标映射到世界坐标</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取当前鼠标在窗口中的位置</span></span><br><span class="line">sf::Vector2i pixelPos = sf::Mouse::<span class="built_in">getPosition</span>(window);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将其转换为世界坐标</span></span><br><span class="line">sf::Vector2f worldPos = window.<span class="built_in">mapPixelToCoords</span>(pixelPos);</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，使用当前视图。如果要使用非活动视图转换坐标，可以将其作为附加参数传递给函数<code>mapPixelToCoords</code></p>
+<p>相反，使用<code>mapCoordsToPixel</code>函数也可以将世界坐标转换为像素坐标。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SFML/" rel="tag"># SFML</a>
+              <a href="/tags/Graghics-module/" rel="tag"># Graghics module</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/" rel="prev" title="预备知识(Position, rotation, scale: Transforming entities)">
+      <i class="fa fa-chevron-left"></i> 预备知识(Position, rotation, scale: Transforming entities)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A7%86%E5%9B%BE%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是视图？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E8%A7%86%E5%9B%BE%E7%9A%84%E6%9F%A5%E7%9C%8B%E5%8C%BA%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text">定义视图的查看区域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%EF%BC%88%E6%BB%9A%E5%8A%A8%EF%BC%89%E8%A7%86%E5%9B%BE"><span class="nav-number">2.1.</span> <span class="nav-text">移动（滚动）视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E8%A7%86%E5%9B%BE"><span class="nav-number">2.2.</span> <span class="nav-text">旋转视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%A9%E6%94%BE%E8%A7%86%E5%9B%BE"><span class="nav-number">2.3.</span> <span class="nav-text">缩放视图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E8%A7%86%E5%9B%BE%E7%9A%84%E6%9F%A5%E7%9C%8B%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">定义视图的查看方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">使用视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F%E6%97%B6%E6%98%BE%E7%A4%BA%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AE%B9"><span class="nav-number">5.</span> <span class="nav-text">调整窗口大小时显示更多内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E8%BD%AC%E6%8D%A2"><span class="nav-number">6.</span> <span class="nav-text">坐标转换</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一只小帆帆"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">一只小帆帆</p>
+  <div class="site-description" itemprop="description">简介不了，慢慢观察</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一只小帆帆</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+</body>
+</html>

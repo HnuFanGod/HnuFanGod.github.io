@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="官方文档：Shapes (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 介绍SFML 提供了一组表示简单形状实体的类。每种类型的形状都是一个单独的类，但它们都派生自同一个基类，以便它们可以访问相同的公共特征子集。然后，每个类都添加自己的属性：圆类的半径属性、矩形类的大小、多边形类的点等。 常见形状属性变换（位置、旋转、比例）这些属性是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预备知识(Shape)">
+<meta property="og:url" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/index.html">
+<meta property="og:site_name" content="帆帆的BLOG">
+<meta property="og:description" content="官方文档：Shapes (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 介绍SFML 提供了一组表示简单形状实体的类。每种类型的形状都是一个单独的类，但它们都派生自同一个基类，以便它们可以访问相同的公共特征子集。然后，每个类都添加自己的属性：圆类的半径属性、矩形类的大小、多边形类的点等。 常见形状属性变换（位置、旋转、比例）这些属性是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-outline.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-texture.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-rectangle.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-regular.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-convex.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-line-rectangle.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-line-primitive.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-ellipse.png">
+<meta property="og:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-antialiasing.png">
+<meta property="article:published_time" content="2022-07-14T07:13:42.000Z">
+<meta property="article:modified_time" content="2022-07-14T07:56:11.301Z">
+<meta property="article:author" content="一只小帆帆">
+<meta property="article:tag" content="SFML">
+<meta property="article:tag" content="Graghics module">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png">
+
+<link rel="canonical" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>预备知识(Shape) | 帆帆的BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">帆帆的BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          预备知识(Shape)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-14 15:13:42 / 修改时间：15:56:11" itemprop="dateCreated datePublished" datetime="2022-07-14T15:13:42+08:00">2022-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-shape.php">Shapes (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>SFML 提供了一组表示简单形状实体的类。每种类型的形状都是一个单独的类，但它们都派生自同一个基类，以便它们可以访问相同的公共特征子集。然后，每个类都添加自己的属性：圆类的半径属性、矩形类的大小、多边形类的点等。</p>
+<h1 id="常见形状属性"><a href="#常见形状属性" class="headerlink" title="常见形状属性"></a>常见形状属性</h1><h2 id="变换（位置、旋转、比例）"><a href="#变换（位置、旋转、比例）" class="headerlink" title="变换（位置、旋转、比例）"></a>变换（位置、旋转、比例）</h2><p>这些属性是所有 SFML 图形类通用的，因此在单独的教程 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-transform.php">Transforming entities</a>介绍了这些属性：</p>
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><p>形状的基本属性之一是其颜色。您可以使用<code>setFillColor</code>函数进行更改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::CircleShape <span class="title">shape</span><span class="params">(<span class="number">50.f</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将形状颜色设置为绿色</span></span><br><span class="line">shape.<span class="built_in">setFillColor</span>(sf::<span class="built_in">Color</span>(<span class="number">100</span>, <span class="number">250</span>, <span class="number">50</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png" alt="graphics-shape-circle"></p>
+<h2 id="轮廓"><a href="#轮廓" class="headerlink" title="轮廓"></a>轮廓</h2><p>形状可以有轮廓。可以使用<code>SetOutlineHickness</code>和<code>setOutlineColor</code>函数设置轮廓的厚度和颜色。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::CircleShape <span class="title">shape</span><span class="params">(<span class="number">50.f</span>)</span></span>;</span><br><span class="line">shape.<span class="built_in">setFillColor</span>(sf::<span class="built_in">Color</span>(<span class="number">150</span>, <span class="number">50</span>, <span class="number">250</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置一个 10 像素宽的橙色轮廓</span></span><br><span class="line">shape.<span class="built_in">setOutlineThickness</span>(<span class="number">10.f</span>);</span><br><span class="line">shape.<span class="built_in">setOutlineColor</span>(sf::<span class="built_in">Color</span>(<span class="number">250</span>, <span class="number">150</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-outline.png" alt="graphics-shape-outline"></p>
+<p>默认情况下，轮廓从形状向外挤出（例如，如果有一个半径为10、轮廓厚度为5的圆，则圆的总半径为15）。通过设置负厚度，可以使其向形状中心挤出。<br>要禁用轮廓，请将其厚度设置为0。如果只需要轮廓，可以将填充颜色设置为<code>sf：：color：：Transparent</code>。</p>
+<h2 id="纹理"><a href="#纹理" class="headerlink" title="纹理"></a>纹理</h2><p><code>shapes</code>也可以有<code>texture</code>，就像 <code>sprites</code>一样。要指定要映射到形状的纹理的一部分，必须使用<code>setTextureRect</code>函数。它需要纹理矩形映射到形状的边界矩形。这种方法没有提供最大的灵活性，但比单独设置形状每个点的纹理坐标更容易使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::CircleShape <span class="title">shape</span><span class="params">(<span class="number">50</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 100x100 带纹理的矩形映射到形状</span></span><br><span class="line">shape.<span class="built_in">setTexture</span>(&amp;texture); <span class="comment">// texture是一个 sf::Texture</span></span><br><span class="line">shape.<span class="built_in">setTextureRect</span>(sf::<span class="built_in">IntRect</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure>
+
+<p>请注意，轮廓没有纹理。</p>
+<p>重要的是要知道纹理是用形状的填充颜色调制（乘以）的。如果其填充颜色为<code>sf：：color：：white</code>，则纹理将显示为未修改。</p>
+<p>要禁用纹理，请调用<code>setTexture（NULL）</code>。</p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-texture.png" alt="graphics-shape-texture"></p>
+<h1 id="绘制形状"><a href="#绘制形状" class="headerlink" title="绘制形状"></a>绘制形状</h1><p>绘制形状就像绘制任何其他 SFML 实体一样简单：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.<span class="built_in">draw</span>(shape);</span><br></pre></td></tr></table></figure>
+
+<h1 id="内置形状类型"><a href="#内置形状类型" class="headerlink" title="内置形状类型"></a>内置形状类型</h1><h2 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h2><p>若要绘制矩形，可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RectangleShape.php"><code>sf::RectangleShape</code></a> 类。它只有一个属性：矩形的大小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// define a 120x50 rectangle</span></span><br><span class="line"><span class="function">sf::RectangleShape <span class="title">rectangle</span><span class="params">(sf::Vector2f(<span class="number">120.f</span>, <span class="number">50.f</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// change the size to 100x100</span></span><br><span class="line">rectangle.<span class="built_in">setSize</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">100.f</span>, <span class="number">100.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-rectangle.png" alt="graphics-shape-rectangle"></p>
+<h2 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h2><p>圆圈由 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1CircleShape.php"><code>sf::CircleShape</code></a> 类表示。它有两个属性：半径和边数。边数是一个可选属性，它允许您调整圆的“质量”：圆必须由具有多条边的多边形近似（图形卡无法直接绘制完美的圆），并且此属性定义了圆近似将具有多少条边。如果你画小圆圈，你可能只需要几个边。如果您绘制大圆圈或缩放常规圆圈，则很可能需要更多的边。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个半径 = 200 的圆</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">circle</span><span class="params">(<span class="number">200.f</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将半径更改为 40</span></span><br><span class="line">circle.<span class="built_in">setRadius</span>(<span class="number">40.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将边数（点）更改为 100</span></span><br><span class="line">circle.<span class="built_in">setPointCount</span>(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png" alt="graphics-shape-circle"></p>
+<h2 id="正多边形"><a href="#正多边形" class="headerlink" title="正多边形"></a>正多边形</h2><p>规多边形没有专用类，实际上您可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1CircleShape.php"><code>sf:;CircleShape</code></a> 类来表示任意数量的边的常规多边形：由于圆由具有多条边的多边形近似，因此您只需要使用边数即可获得所需的多边形。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1CircleShape.php"><code>sf::CircleShape</code></a>有3个点是一个三角形，有4个点是一个正方形，依此类推。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个三角形</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">triangle</span><span class="params">(<span class="number">80.f</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个正方形</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">square</span><span class="params">(<span class="number">80.f</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个八边形</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">octagon</span><span class="params">(<span class="number">80.f</span>, <span class="number">8</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-regular.png" alt="graphics-shape-regular"></p>
+<h2 id="凸形"><a href="#凸形" class="headerlink" title="凸形"></a>凸形</h2><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a> 类是终极形状类：它允许您定义任何<em>凸</em>形状。SFML 无法绘制凹面形状。如果需要绘制凹面形状，则必须将其拆分为多个凸面。</p>
+<p>若要构造凸形状，必须首先设置它应具有的点数，然后定义点。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个空的形状</span></span><br><span class="line">sf::ConvexShape convex;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将其调整为 5 点</span></span><br><span class="line">convex.<span class="built_in">setPointCount</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义点</span></span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">0</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">0.f</span>, <span class="number">0.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">1</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">150.f</span>, <span class="number">10.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">2</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">120.f</span>, <span class="number">90.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">3</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">30.f</span>, <span class="number">100.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">4</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">0.f</span>, <span class="number">50.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><strong>定义点的顺序非常重要。它们必须<em>按</em>顺时针或逆时针顺序定义。如果以不一致的顺序定义它们，则形状的构造将不正确</strong></p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-convex.png" alt="graphics-shape-convex"></p>
+<p>尽管 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a> 的名称暗示它应该仅用于表示凸形状，但它的要求稍微宽松一些。实际上，您的形状必须满足的唯一要求是，如果您继续绘制从其<em>重心</em>到其所有点的线条，则必须以相同的顺序绘制这些线条。您不得“跳到前一行后面”。在内部，凸形形状是使用<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Triangle_fan">三角形风扇</a>自动构造的，因此，如果您的形状可由三角形风扇表示，则可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a>。有了这个宽松的定义，例如，您可以使用<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a>绘制星星。</p>
+<h2 id="线"><a href="#线" class="headerlink" title="线"></a>线</h2><p>线条没有形状类。原因很简单：如果你的线有一个粗细，它是一个矩形。如果没有，可以用直线基元绘制。</p>
+<p>带粗细的线条：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::RectangleShape <span class="title">line</span><span class="params">(sf::Vector2f(<span class="number">150.f</span>, <span class="number">5.f</span>))</span></span>;</span><br><span class="line">line.<span class="built_in">rotate</span>(<span class="number">45.f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-line-rectangle.png" alt="graphics-shape-line-rectangle"></p>
+<p>不带粗细的线条：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sf::Vertex line[] =</span><br><span class="line">&#123;</span><br><span class="line">    sf::<span class="built_in">Vertex</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">10.f</span>, <span class="number">10.f</span>)),</span><br><span class="line">    sf::<span class="built_in">Vertex</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">150.f</span>, <span class="number">150.f</span>))</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">window.<span class="built_in">draw</span>(line, <span class="number">2</span>, sf::Lines);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-line-primitive.png" alt="graphics-shape-line-primitive"></p>
+<p>要了解有关顶点和基元的详细信息，可以阅读有关<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php">顶点数组的</a>教程。</p>
+<h2 id="自定义形状类型"><a href="#自定义形状类型" class="headerlink" title="自定义形状类型"></a>自定义形状类型</h2><p>可以使用自己的形状类型扩展形状类集。为此，您必须从 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Shape.php"><code>sf::Shape</code></a> 派生并覆盖两个函数：</p>
+<ul>
+<li><code>getPointCount</code>：返回形状中的点数</li>
+<li><code>getPoint</code>：返回形状的点</li>
+</ul>
+<p>每当形状中的任何点发生更改时，还必须调用受保护的函数，以便基类得到通知并可以更新其内部几何。<code>update()</code></p>
+<p>下面是自定义形状类的完整示例：椭圆形状。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">EllipseShape</span> : <span class="keyword">public</span> sf::Shape</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">EllipseShape</span><span class="params">(<span class="type">const</span> sf::Vector2f&amp; radius = sf::Vector2f(<span class="number">0.f</span>, <span class="number">0.f</span>))</span> :</span></span><br><span class="line"><span class="function">    m_radius(radius)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">        <span class="built_in">update</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setRadius</span><span class="params">(<span class="type">const</span> sf::Vector2f&amp; radius)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m_radius = radius;</span><br><span class="line">        <span class="built_in">update</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">const</span> sf::Vector2f&amp; <span class="title">getRadius</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> m_radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> std::<span class="type">size_t</span> <span class="title">getPointCount</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">30</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> sf::Vector2f <span class="title">getPoint</span><span class="params">(std::<span class="type">size_t</span> index)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">static</span> <span class="type">const</span> <span class="type">float</span> pi = <span class="number">3.141592654f</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">float</span> angle = index * <span class="number">2</span> * pi / <span class="built_in">getPointCount</span>() - pi / <span class="number">2</span>;</span><br><span class="line">        <span class="type">float</span> x = std::<span class="built_in">cos</span>(angle) * m_radius.x;</span><br><span class="line">        <span class="type">float</span> y = std::<span class="built_in">sin</span>(angle) * m_radius.y;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sf::<span class="built_in">Vector2f</span>(m_radius.x + x, m_radius.y + y);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> :</span><br><span class="line"></span><br><span class="line">    sf::Vector2f m_radius;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-ellipse.png" alt="graphics-shape-ellipse"></p>
+<h2 id="抗锯齿形状"><a href="#抗锯齿形状" class="headerlink" title="抗锯齿形状"></a>抗锯齿形状</h2><p>没有消除单个形状锯齿的选项。要获得消除锯齿的形状（即具有平滑边缘的形状），您必须在创建窗口时使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/structsf_1_1ContextSettings.php"><code>sf：：ContextSettings</code></a> 结构的相应属性全局启用消除锯齿。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sf::ContextSettings settings;</span><br><span class="line">settings.antialiasingLevel = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::RenderWindow <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;SFML shapes&quot;</span>, sf::Style::Default, settings)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-antialiasing.png" alt="graphics-shape-antialiasing"></p>
+<p>请记住，抗锯齿可用性取决于图形卡：它可能不支持它，或者在驱动程序设置中强制禁用它。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SFML/" rel="tag"># SFML</a>
+              <a href="/tags/Graghics-module/" rel="tag"># Graghics module</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Text-and-fonts/" rel="prev" title="预备知识(Text and fonts)">
+      <i class="fa fa-chevron-left"></i> 预备知识(Text and fonts)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/" rel="next" title="预备知识(Position, rotation, scale: Transforming entities)">
+      预备知识(Position, rotation, scale: Transforming entities) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%BD%A2%E7%8A%B6%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">常见形状属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%EF%BC%88%E4%BD%8D%E7%BD%AE%E3%80%81%E6%97%8B%E8%BD%AC%E3%80%81%E6%AF%94%E4%BE%8B%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">变换（位置、旋转、比例）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%9C%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text">颜色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AE%E5%BB%93"><span class="nav-number">2.3.</span> <span class="nav-text">轮廓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86"><span class="nav-number">2.4.</span> <span class="nav-text">纹理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E5%BD%A2%E7%8A%B6"><span class="nav-number">3.</span> <span class="nav-text">绘制形状</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%BD%A2%E7%8A%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">内置形状类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E5%BD%A2"><span class="nav-number">4.1.</span> <span class="nav-text">矩形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%86"><span class="nav-number">4.2.</span> <span class="nav-text">圆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%A4%9A%E8%BE%B9%E5%BD%A2"><span class="nav-number">4.3.</span> <span class="nav-text">正多边形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%B8%E5%BD%A2"><span class="nav-number">4.4.</span> <span class="nav-text">凸形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF"><span class="nav-number">4.5.</span> <span class="nav-text">线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BD%A2%E7%8A%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.6.</span> <span class="nav-text">自定义形状类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%97%E9%94%AF%E9%BD%BF%E5%BD%A2%E7%8A%B6"><span class="nav-number">4.7.</span> <span class="nav-text">抗锯齿形状</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一只小帆帆"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">一只小帆帆</p>
+  <div class="site-description" itemprop="description">简介不了，慢慢观察</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一只小帆帆</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+</body>
+</html>

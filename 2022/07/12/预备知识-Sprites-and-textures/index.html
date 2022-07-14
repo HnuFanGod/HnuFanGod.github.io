@@ -20,21 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="它们是什么？texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。 sprite只不过是一个纹理矩形。  这就是Sprite and texture。">
+  <meta name="description" content="官方文档：Sprites and textures (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 它们是什么？texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。 sprite只不过是一个纹理矩形。  这就是Sprite and texture。 加载纹理在创建任何精灵之前，我们需">
 <meta property="og:type" content="article">
 <meta property="og:title" content="预备知识(Sprites and textures)">
 <meta property="og:url" content="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/index.html">
 <meta property="og:site_name" content="帆帆的BLOG">
-<meta property="og:description" content="它们是什么？texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。 sprite只不过是一个纹理矩形。  这就是Sprite and texture。">
+<meta property="og:description" content="官方文档：Sprites and textures (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org) 它们是什么？texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。 sprite只不过是一个纹理矩形。  这就是Sprite and texture。 加载纹理在创建任何精灵之前，我们需">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png">
+<meta property="og:image" content="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png">
+<meta property="og:image" content="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-smooth.png">
+<meta property="og:image" content="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-repeated.png">
+<meta property="og:image" content="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-color.png">
 <meta property="article:published_time" content="2022-07-12T08:06:13.000Z">
-<meta property="article:modified_time" content="2022-07-12T08:11:51.912Z">
+<meta property="article:modified_time" content="2022-07-14T00:52:04.399Z">
 <meta property="article:author" content="一只小帆帆">
 <meta property="article:tag" content="SFML">
 <meta property="article:tag" content="Graghics module">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png">
+<meta name="twitter:image" content="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png">
 
 <link rel="canonical" href="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/">
 
@@ -214,10 +217,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-12 16:06:13 / 修改时间：16:11:51" itemprop="dateCreated datePublished" datetime="2022-07-12T16:06:13+08:00">2022-07-12</time>
+              <time title="创建时间：2022-07-12 16:06:13" itemprop="dateCreated datePublished" datetime="2022-07-12T16:06:13+08:00">2022-07-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-14 08:52:04" itemprop="dateModified" datetime="2022-07-14T08:52:04+08:00">2022-07-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -250,10 +259,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="它们是什么？"><a href="#它们是什么？" class="headerlink" title="它们是什么？"></a>它们是什么？</h1><p>texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。</p>
+        <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-sprite.php">Sprites and textures (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="它们是什么？"><a href="#它们是什么？" class="headerlink" title="它们是什么？"></a>它们是什么？</h1><p>texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。</p>
 <p>sprite只不过是一个纹理矩形。</p>
-<p><img src="/./%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png" alt="graphics-sprites-definition"></p>
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png" alt="graphics-sprites-definition"></p>
 <p>这就是<code>Sprite and texture</code>。</p>
+<h1 id="加载纹理"><a href="#加载纹理" class="headerlink" title="加载纹理"></a>加载纹理</h1><p>在创建任何精灵之前，我们需要一个有效的纹理。令人惊讶的是，在 SFML 中封装纹理的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a>。由于纹理的唯一作用是加载并映射到图形实体，因此几乎所有的功能都是关于加载和更新纹理的。</p>
+<p>加载纹理的最常见方法是从磁盘上的图像文件加载，这是通过<code>loadFromFile</code>函数完成的</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sf::Texture texture;</span><br><span class="line"><span class="keyword">if</span> (!texture.<span class="built_in">loadFromFile</span>(<span class="string">&quot;image.png&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该函数有时可能会在没有明显原因的情况下失败。首先，检查 SFML 打印到标准输出的错误消息（检查控制台）。如果邮件无法打开文件，请确保<em>工作目录</em>（即任何文件路径将相对于其解释的目录）是您认为的目录：从桌面环境运行应用程序时，工作目录是可执行文件夹。但是，当您从 IDE（Visual Studio、Code：：Blocks 等）启动程序时，工作目录有时可能会设置为<em>项目</em>目录。这通常可以在项目设置中轻松更改。</p>
+</blockquote>
+<p>还可以从内存 （loadFromMemory）、<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-stream.php">自定义输入流</a> （loadFromStream） 或已加载的图像 （loadFromImage） 加载图像文件。后者从 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Image.php"><code>sf::Image</code></a> 加载纹理，它是一个实用程序类，可帮助存储和操作图像数据（修改像素、创建透明度通道等）。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Image.php"><code>sf::Image</code></a>的像素保留在系统内存中，这确保了对它们的操作将尽可能快，这与驻留在视频内存中的纹理像素相反，因此检索或更新速度很慢，但绘制速度非常快。</p>
+<p>SFML 支持最常见的图像文件格式。完整列表可在 API 文档中找到。</p>
+<p>所有这些加载函数都有一个可选参数，如果要加载图像的较小部分，可以使用该参数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载一个从 (10, 10) 开始的 32x32 矩形</span></span><br><span class="line"><span class="keyword">if</span> (!texture.<span class="built_in">loadFromFile</span>(<span class="string">&quot;image.png&quot;</span>, sf::<span class="built_in">IntRect</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Rect.php"><code>sf::IntRect</code></a> 类是表示矩形的简单实用工具类型。其构造函数采用左上角的坐标和矩形的大小。</p>
+<p>如果你不想从图像加载纹理，而是希望直接从像素数组更新纹理，则可以将其创建为空，稍后再更新：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个空的 200x200 纹理</span></span><br><span class="line"><span class="keyword">if</span> (!texture.<span class="built_in">create</span>(<span class="number">200</span>, <span class="number">200</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，此时纹理的内容尚未定义。</p>
+<p>要更新现有纹理的像素，必须使用update函数。它对许多类型的数据源具有重载。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从像素数组更新纹理</span></span><br><span class="line">sf::Uint8* pixels = <span class="keyword">new</span> sf::Uint8[width * height * <span class="number">4</span>]; <span class="comment">// * 4 因为像素有 4 个分量 (RGBA)</span></span><br><span class="line">...</span><br><span class="line">texture.<span class="built_in">update</span>(pixels);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 sf::Image 更新纹理</span></span><br><span class="line">sf::Image image;</span><br><span class="line">...</span><br><span class="line">texture.<span class="built_in">update</span>(image);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从窗口的当前内容更新纹理</span></span><br><span class="line">sf::RenderWindow window;</span><br><span class="line">...</span><br><span class="line">texture.<span class="built_in">update</span>(window);</span><br></pre></td></tr></table></figure>
+
+<p>这些示例都假定源与纹理具有相同的大小。如果不是这种情况，即如果您只想更新纹理的一部分，则可以指定要更新的子矩形的坐标。有关更多详细信息，请参阅文档。</p>
+<p>此外，纹理具有两个属性，用于更改其渲染方式。</p>
+<p>第一个属性允许平滑纹理。平滑纹理会使像素边界不那么明显（但图像会更加模糊）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">texture.<span class="built_in">setSmooth</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-smooth.png" alt="graphics-sprites-smooth"></p>
+<p>第二个属性允许在单个精灵中重复平铺纹理。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">texture.<span class="built_in">setRepeated</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-repeated.png" alt="graphics-sprites-repeated"></p>
+<h1 id="现在可以拥有我的sprite了吗？"><a href="#现在可以拥有我的sprite了吗？" class="headerlink" title="现在可以拥有我的sprite了吗？"></a>现在可以拥有我的sprite了吗？</h1><p>创建子画面</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sf::Sprite sprite;</span><br><span class="line">sprite.<span class="built_in">setTexture</span>(texture);</span><br></pre></td></tr></table></figure>
+
+<p>最后画出来。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在主循环内，在 window.clear() 和 window.display() 之间</span></span><br><span class="line">window.<span class="built_in">draw</span>(sprite);</span><br></pre></td></tr></table></figure>
+
+<p>如果不希望 Sprite 使用整个纹理，可以设置其纹理矩形。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sprite.<span class="built_in">setTextureRect</span>(sf::<span class="built_in">IntRect</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>));</span><br></pre></td></tr></table></figure>
+
+<p>你也可以改变<code>Sprite</code>的颜色。设置的颜色将随精灵的纹理进行调制（相乘）。这也可以用于更改精灵的全局透明度<code>（alpha）</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sprite.<span class="built_in">setColor</span>(sf::<span class="built_in">Color</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>)); <span class="comment">// 绿色</span></span><br><span class="line">sprite.<span class="built_in">setColor</span>(sf::<span class="built_in">Color</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">128</span>)); <span class="comment">// 半透明</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-color.png" alt="graphics-sprites-color"></p>
+<p>精灵也可以变换：它们有位置，方向和比例。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 位置</span></span><br><span class="line">sprite.<span class="built_in">setPosition</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">10.f</span>, <span class="number">50.f</span>)); <span class="comment">// 绝对位置</span></span><br><span class="line">sprite.<span class="built_in">move</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">5.f</span>, <span class="number">10.f</span>)); <span class="comment">// 相对于当前位置的偏移量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 回转</span></span><br><span class="line">sprite.<span class="built_in">setRotation</span>(<span class="number">90.f</span>); <span class="comment">// 绝对角度</span></span><br><span class="line">sprite.<span class="built_in">rotate</span>(<span class="number">15.f</span>); <span class="comment">// 相对于当前角度的偏移</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 规模</span></span><br><span class="line">sprite.<span class="built_in">setScale</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">0.5f</span>, <span class="number">2.f</span>)); <span class="comment">// 绝对比例因子</span></span><br><span class="line">sprite.<span class="built_in">scale</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">1.5f</span>, <span class="number">3.f</span>)); <span class="comment">// 相对于当前比例的因子</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，这三个转换的原点位于子画面的左上角。如果要将原点设置为其他点（例如，子画面的中心或其他角），则可以使用<code>setOrigin</code>函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sprite.<span class="built_in">setOrigin</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">25.f</span>, <span class="number">25.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p>由于转换函数对于所有<code>SFML</code>实体都是通用的，因此在单独的教程：<code>Transforming entities.</code>中对其进行了解释。</p>
+<h1 id="白色方块问题"><a href="#白色方块问题" class="headerlink" title="白色方块问题"></a>白色方块问题</h1><p>您已成功加载纹理，正确构造了子画面，并且…您现在在屏幕上看到的只是一个白色正方形。发生了什么事？</p>
+<p>这是一个常见的错误。设置子画面的纹理时，它在内部所做的就是存储指向纹理实例的指针。因此，如果纹理被破坏或移动到内存中的其他位置，则子画面最终会得到一个无效的纹理指针。</p>
+<p>当您编写此类函数时，会出现此问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::Sprite <span class="title">loadSprite</span><span class="params">(std::string filename)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    sf::Texture texture;</span><br><span class="line">    texture.<span class="built_in">loadFromFile</span>(filename);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sf::<span class="built_in">Sprite</span>(texture);</span><br><span class="line">&#125; <span class="comment">// 错误：纹理在这里被破坏</span></span><br></pre></td></tr></table></figure>
+
+<p>你必须正确管理纹理的生存期，并确保只要任何子画面使用它们，它们就会存在。</p>
+<h1 id="使用尽可能少的纹理"><a href="#使用尽可能少的纹理" class="headerlink" title="使用尽可能少的纹理"></a>使用尽可能少的纹理</h1><p>使用尽可能少的纹理是一个很好的策略，原因很简单：更改当前纹理对于图形卡来说是一项昂贵的操作。绘制许多使用相同纹理的精灵将产生最佳性能。</p>
+<p>此外，使用单个纹理可以将静态几何体分组到单个实体中（每次调用只能使用一个纹理），这比一组多个实体的绘制速度快得多。批处理静态几何涉及其他类，因此超出了本教程的范围，有关更多详细信息，请参阅<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php">vertex array</a>教程。</p>
+<p>在创建动画工作表或切片集时，请牢记这一点：使用尽可能少的纹理。</p>
+<h1 id="用OpenGL使用sf-Texture"><a href="#用OpenGL使用sf-Texture" class="headerlink" title="用OpenGL使用sf::Texture"></a>用OpenGL使用sf::Texture</h1><p>如果您使用的是 OpenGL 而不是 SFML 的图形实体，您仍然可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a> 作为 OpenGL 纹理对象的包装器，并将其与 OpenGL 代码的其余部分一起使用。</p>
+<p>要绑定 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a> 进行绘制（基本上是<code>glBindTexture</code>），请调用静态函数：<code>bind</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sf::Texture texture;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定纹理</span></span><br><span class="line">sf::Texture::<span class="built_in">bind</span>(&amp;texture);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在此处绘制纹理 OpenGL 实体...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定无纹理</span></span><br><span class="line">sf::Texture::<span class="built_in">bind</span>(<span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -276,7 +349,10 @@
     <a href="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Drawing-2D-stuff/" rel="prev" title="预备知识(Drawing 2D stuff)">
       <i class="fa fa-chevron-left"></i> 预备知识(Drawing 2D stuff)
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Text-and-fonts/" rel="next" title="预备知识(Text and fonts)">
+      预备知识(Text and fonts) <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -335,7 +411,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%83%E4%BB%AC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">它们是什么？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%83%E4%BB%AC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">它们是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E7%BA%B9%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">加载纹理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E5%8F%AF%E4%BB%A5%E6%8B%A5%E6%9C%89%E6%88%91%E7%9A%84sprite%E4%BA%86%E5%90%97%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">现在可以拥有我的sprite了吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BD%E8%89%B2%E6%96%B9%E5%9D%97%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">白色方块问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B0%BD%E5%8F%AF%E8%83%BD%E5%B0%91%E7%9A%84%E7%BA%B9%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">使用尽可能少的纹理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8OpenGL%E4%BD%BF%E7%94%A8sf-Texture"><span class="nav-number">6.</span> <span class="nav-text">用OpenGL使用sf::Texture</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -350,7 +426,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

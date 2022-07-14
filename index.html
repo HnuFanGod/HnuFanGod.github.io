@@ -185,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -199,7 +199,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/" class="post-title-link" itemprop="url">预备知识(Sprites and textures)</a>
+            <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/" class="post-title-link" itemprop="url">预备知识(Controlling the 2D camera with views)</a>
         </h2>
 
         <div class="post-meta">
@@ -210,7 +210,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-12 16:06:13 / 修改时间：16:11:51" itemprop="dateCreated datePublished" datetime="2022-07-12T16:06:13+08:00">2022-07-12</time>
+              <time title="创建时间：2022-07-14 16:31:51 / 修改时间：17:07:02" itemprop="dateCreated datePublished" datetime="2022-07-14T16:31:51+08:00">2022-07-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,10 +237,550 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="它们是什么？"><a href="#它们是什么？" class="headerlink" title="它们是什么？"></a>它们是什么？</h1><p>texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。</p>
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-view.php">Controlling the 2D camera with views (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="什么是视图？"><a href="#什么是视图？" class="headerlink" title="什么是视图？"></a>什么是视图？</h1><p>在游戏中，关卡比窗口本身大得多的情况并不少见。你只看到其中的一小部分。在RPG，平台游戏和许多其他类型中通常都是这种情况。开发人员可能倾向于忘记的是，他们在<em>2D世界中</em>定义实体，而不是直接在窗口中定义实体。窗口只是一个视图，它显示了整个世界的特定区域。平行绘制同一世界的多个视图，或者将世界绘制到纹理而不是窗口是完全可以的。世界本身保持不变，变化的只是人们看待它的方式。</p>
+<p>由于在窗口中看到的内容只是整个2D世界的一小部分，因此您需要一种方法来指定窗口中显示世界的哪个部分。此外，您可能还希望定义此区域在<em>窗口中的显示</em>位置&#x2F;方式。这是 SFML 视图的两个主要功能。</p>
+<p>总而言之，如果要滚动、旋转或缩放世界，则需要视图。它们也是创建分屏和迷你地图的关键。</p>
+<h1 id="定义视图的查看区域"><a href="#定义视图的查看区域" class="headerlink" title="定义视图的查看区域"></a>定义视图的查看区域</h1><p>在 SFML 中封装视图的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1View.php"><code>sf：：View</code></a>。它可以直接使用要查看的区域的定义来构造：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用 2D 世界的矩形区域创建一个视图以显示</span></span><br><span class="line"><span class="function">sf::View <span class="title">view1</span><span class="params">(sf::FloatRect(<span class="number">200.f</span>, <span class="number">200.f</span>, <span class="number">300.f</span>, <span class="number">200.f</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个具有中心和大小的视图</span></span><br><span class="line"><span class="function">sf::View <span class="title">view2</span><span class="params">(sf::Vector2f(<span class="number">350.f</span>, <span class="number">300.f</span>), sf::Vector2f(<span class="number">300.f</span>, <span class="number">200.f</span>))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>这两个定义是等效的：两个视图将显示 2D 世界的相同区域，即以点 （350， 300） <em>为中心的</em> 300x200 矩形。</p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-initial.png" alt="graphics-view-initial"></p>
+<p>如果不想在构造时定义视图或以后要对其进行修改，则可以使用等效的 setter：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sf::View view1;</span><br><span class="line">view1.<span class="built_in">reset</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">200.f</span>, <span class="number">200.f</span>, <span class="number">300.f</span>, <span class="number">200.f</span>));</span><br><span class="line"></span><br><span class="line">sf::View view2;</span><br><span class="line">view2.<span class="built_in">setCenter</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">350.f</span>, <span class="number">300.f</span>));</span><br><span class="line">view2.<span class="built_in">setSize</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">200.f</span>, <span class="number">200.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p>定义视图后，您以对其进行变换，使其显示 2D 世界的平移&#x2F;旋转&#x2F;缩放版本。</p>
+<h2 id="移动（滚动）视图"><a href="#移动（滚动）视图" class="headerlink" title="移动（滚动）视图"></a>移动（滚动）视图</h2><p>视图始终由其中心操控（实体由左上角操控）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 移动视图到点 (200, 200) 处</span></span><br><span class="line">view.<span class="built_in">setCenter</span>(<span class="number">200.f</span>, <span class="number">200.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将视图移动 (100, 100) 的偏移量（因此它的最终位置是 (300, 300)）</span></span><br><span class="line">view.<span class="built_in">move</span>(<span class="number">100.f</span>, <span class="number">100.f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-translated.png" alt="graphics-view-translated"></p>
+<h2 id="旋转视图"><a href="#旋转视图" class="headerlink" title="旋转视图"></a>旋转视图</h2><p>使用<code>setRotation</code>函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将视图旋转 20 度</span></span><br><span class="line">view.<span class="built_in">setRotation</span>(<span class="number">20.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于当前方向将视图旋转 5 度（因此其最终方向为 25 度）</span></span><br><span class="line">view.<span class="built_in">rotate</span>(<span class="number">5.f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-rotated.png" alt="graphics-view-rotated"></p>
+<h2 id="缩放视图"><a href="#缩放视图" class="headerlink" title="缩放视图"></a>缩放视图</h2><p>使用<code>setSize</code>函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调整视图大小以显示 1200x800 区域（我们看到更大的区域，所以这是缩小）</span></span><br><span class="line">view.<span class="built_in">setSize</span>(<span class="number">1200.f</span>, <span class="number">800.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于当前大小缩放视图（应用因子 0.5，因此其最终大小为 600x400）</span></span><br><span class="line">view.<span class="built_in">zoom</span>(<span class="number">0.5f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-scaled.png" alt="graphics-view-scaled"></p>
+<h1 id="定义视图的查看方式"><a href="#定义视图的查看方式" class="headerlink" title="定义视图的查看方式"></a>定义视图的查看方式</h1><p>现在，您已经定义了在窗口中可以看到 2D 世界的哪个部分，让我们定义它的显示<em>位置</em>。默认情况下，查看的内容占据整个窗口。如果视图的大小与窗口相同，则所有内容都以 1：1 呈现。如果视图小于或大于窗口，则所有内容都将缩放以适合窗口。</p>
+<p>此默认行为适用于大多数情况，但有时可能需要更改。例如，要在多人游戏中拆分屏幕，您可能希望使用两个视图，每个视图仅占据窗口的一半。您还可以通过将整个世界绘制到在窗口角落的一小块区域中渲染的视图来实现小地图。显示视图内容的区域称为<em>视区</em>。</p>
+<p>要设置视图的视口，可以使用setViewport函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个居中的视口，窗口大小的一半</span></span><br><span class="line">view.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.25f</span>, <span class="number">0.25</span>, <span class="number">0.5f</span>, <span class="number">0.5f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-viewport.png" alt="graphics-view-viewport"></p>
+<p>视口不是以像素为单位定义的，而是以窗口大小的比率来定义的。</p>
+<p>使用视口，可以直接拆分多人游戏的屏幕：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 玩家1（屏幕左侧）</span></span><br><span class="line">player1View.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.f</span>, <span class="number">0.f</span>, <span class="number">0.5f</span>, <span class="number">1.f</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 玩家2（屏幕右侧）</span></span><br><span class="line">player2View.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.5f</span>, <span class="number">0.f</span>, <span class="number">0.5f</span>, <span class="number">1.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-split-screen.png" alt="graphics-view-split-screen"></p>
+<p>迷你地图：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 游戏视图（全窗口）</span></span><br><span class="line">gameView.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.f</span>, <span class="number">0.f</span>, <span class="number">1.f</span>, <span class="number">1.f</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 小地图（右上角）</span></span><br><span class="line">minimapView.<span class="built_in">setViewport</span>(sf::<span class="built_in">FloatRect</span>(<span class="number">0.75f</span>, <span class="number">0.f</span>, <span class="number">0.25f</span>, <span class="number">0.25f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Controlling-the-2D-camera-with-views/graphics-view-minimap.png" alt="graphics-view-minimap"></p>
+<h1 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h1><p>要使用视图绘制某些内容，必须在调用要绘制的目标（<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderWindow.php"><code>sf::RenderWindow</code></a>或<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderTexture.php"><code>sf::RenderTexture）</code></a>的函数<code>setView</code>后绘制它。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个视图</span></span><br><span class="line"><span class="function">sf::View <span class="title">view</span><span class="params">(sf::FloatRect(<span class="number">0.f</span>, <span class="number">0.f</span>, <span class="number">1000.f</span>, <span class="number">600.f</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 激活它</span></span><br><span class="line">window.<span class="built_in">setView</span>(view);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在那个视图上画一些东西</span></span><br><span class="line">window.<span class="built_in">draw</span>(some_sprite);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 想要进行可见性检查？ 检索视图</span></span><br><span class="line">sf::View currentView = window.<span class="built_in">getView</span>();</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>视图将保持活动状态，直到您设置另一个视图。这意味着总有一个视图来定义目标中显示的内容以及绘制位置。如果未显式设置任何视图，则呈现器目标将使用其自己的默认视图，该视图与其大小 1：1 匹配。你可以使用该函数获取呈现器目标的默认视图。如果要基于它定义自己的视图，或者还原它以在场景顶部绘制固定实体（如 GUI），这将非常有用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个默认视图一半大小的视图</span></span><br><span class="line">sf::View view = window.<span class="built_in">getDefaultView</span>();</span><br><span class="line">view.<span class="built_in">zoom</span>(<span class="number">0.5f</span>);</span><br><span class="line">window.<span class="built_in">setView</span>(view);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 恢复默认视图</span></span><br><span class="line">window.<span class="built_in">setView</span>(window.<span class="built_in">getDefaultView</span>());</span><br></pre></td></tr></table></figure>
+
+<p>每当您更新视图时，都需要再次调用<code>setView</code>以应用修改。</p>
+<h1 id="调整窗口大小时显示更多内容"><a href="#调整窗口大小时显示更多内容" class="headerlink" title="调整窗口大小时显示更多内容"></a>调整窗口大小时显示更多内容</h1><p>由于默认视图在创建窗口后永远不会更改，因此查看的内容始终相同。因此，当调整窗口大小时，所有内容都会被挤压&#x2F;拉伸到新大小。</p>
+<p>如果不想显示此默认行为，而是要根据窗口的新大小显示更多&#x2F;更少的内容，则只需使用窗口大小更新视图的大小即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 事件循环</span></span><br><span class="line">sf::Event event;</span><br><span class="line"><span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 捕捉调整大小事件</span></span><br><span class="line">    <span class="keyword">if</span> (event.type == sf::Event::Resized)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 将视图更新为窗口的新大小</span></span><br><span class="line">        <span class="function">sf::FloatRect <span class="title">visibleArea</span><span class="params">(<span class="number">0.f</span>, <span class="number">0.f</span>, event.size.width, event.size.height)</span></span>;</span><br><span class="line">        window.<span class="built_in">setView</span>(sf::<span class="built_in">View</span>(visibleArea));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="坐标转换"><a href="#坐标转换" class="headerlink" title="坐标转换"></a>坐标转换</h1><p>使用自定义视图时，或者在不使用上述代码的情况下调整窗口大小时，目标上显示的像素不再与 2D 世界中的单位匹配。例如，点击像素（10，50）可能会到达你世界的点（26.5，-84）。您最终必须使用转换函数<code>mapPixelToCoords</code>将像素坐标映射到世界坐标</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取当前鼠标在窗口中的位置</span></span><br><span class="line">sf::Vector2i pixelPos = sf::Mouse::<span class="built_in">getPosition</span>(window);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将其转换为世界坐标</span></span><br><span class="line">sf::Vector2f worldPos = window.<span class="built_in">mapPixelToCoords</span>(pixelPos);</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，使用当前视图。如果要使用非活动视图转换坐标，可以将其作为附加参数传递给函数<code>mapPixelToCoords</code></p>
+<p>相反，使用<code>mapCoordsToPixel</code>函数也可以将世界坐标转换为像素坐标。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/" class="post-title-link" itemprop="url">预备知识(Position, rotation, scale: Transforming entities)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-14 15:55:09 / 修改时间：16:24:03" itemprop="dateCreated datePublished" datetime="2022-07-14T15:55:09+08:00">2022-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-transform.php">Position, rotation, scale: Transforming entities (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="转换SFML实体"><a href="#转换SFML实体" class="headerlink" title="转换SFML实体"></a>转换SFML实体</h1><p>所有 SFML 类（子画面、文本、形状）都使用相同的转换接口：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Transformable.php"><code>sf::Transformable</code></a>。此基类提供了一个简单的 API 来移动、旋转和缩放实体。它没有提供最大的灵活性，而是定义了一个易于理解和使用的界面，它涵盖了所有用例的99% - 对于剩余的1%，请参阅最后一章。</p>
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Transformable.php"><code>sf::Transformable</code></a>（及其所有派生类）定义了四个属性：<strong>位置</strong>、<strong>旋转</strong>、<strong>缩放</strong>和<strong>原点</strong>。他们都有各自的获取者和二传手。这些转换组件都是相互独立的：如果要更改实体的方向，则只需设置其旋转属性，而不必关心当前位置和缩放。</p>
+<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的绝对位置</span></span><br><span class="line">entity.<span class="built_in">setPosition</span>(<span class="number">10.f</span>, <span class="number">50.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将实体相对于其当前位置移动</span></span><br><span class="line">entity.<span class="built_in">move</span>(<span class="number">5.f</span>, <span class="number">5.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的绝对位置</span></span><br><span class="line">sf::Vector2f position = entity.<span class="built_in">getPosition</span>(); <span class="comment">// = (15, 55)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-position.png" alt="graphics-transform-position"></p>
+<p>默认情况下，实体相对于其左上角的位置。</p>
+<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><p>以度为单位，按顺时针顺序定义（因为 Y 轴在 SFML 中指向下方）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的绝对旋转</span></span><br><span class="line">entity.<span class="built_in">setRotation</span>(<span class="number">45.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于其当前方向旋转实体</span></span><br><span class="line">entity.<span class="built_in">rotate</span>(<span class="number">10.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的绝对旋转</span></span><br><span class="line"><span class="type">float</span> rotation = entity.<span class="built_in">getRotation</span>(); <span class="comment">// = 55</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-rotation.png" alt="graphics-transform-rotation"></p>
+<p>调用getRotation时，SFML 始终返回范围 [0， 360） 中的角度</p>
+<p>与位置一样，默认情况下，旋转是围绕左上角执行的，但这可以通过设置原点来更改。</p>
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><p>比例因子允许调整实体的大小。默认比例为 1。将其设置为小于 1 的值会使实体变小，大于 1 会使实体变大。还允许使用负比例值，以便可以镜像实体。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的绝对比例</span></span><br><span class="line">entity.<span class="built_in">setScale</span>(<span class="number">4.f</span>, <span class="number">1.6f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相对于其当前规模缩放实体</span></span><br><span class="line">entity.<span class="built_in">scale</span>(<span class="number">0.5f</span>, <span class="number">0.5f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的绝对比例</span></span><br><span class="line">sf::Vector2f scale = entity.<span class="built_in">getScale</span>(); <span class="comment">// = (2, 0.8)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-scale.png" alt="graphics-transform-scale"></p>
+<h2 id="原点"><a href="#原点" class="headerlink" title="原点"></a>原点</h2><p>原点是其他三个变换的中心点。图元的位置是其原点的位置，其旋转围绕原点执行，并且缩放也相对于原点应用。默认情况下，它是实体的左上角（点 （0， 0））。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “实体”可以是 sf::Sprite、sf::Text、sf::Shape 或任何其他可转换的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置实体的原点</span></span><br><span class="line">entity.<span class="built_in">setOrigin</span>(<span class="number">10.f</span>, <span class="number">20.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检索实体的位置</span></span><br><span class="line">sf::Vector2f origin = entity.<span class="built_in">getOrigin</span>(); <span class="comment">// = (10, 20)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="定界框"><a href="#定界框" class="headerlink" title="定界框"></a>定界框</h1><p>转换实体并绘制它们之后，您可能希望使用它们执行一些计算，例如检查碰撞。</p>
+<p>SFML 实体可以为您提供其边界框。边界框是包含属于图元的所有点的最小矩形，其边与 X 轴和 Y 轴对齐。</p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Position-rotation-scale-Transforming-entities/graphics-transform-bounds.png" alt="graphics-transform-bounds"></p>
+<p>在实现碰撞检测时，边界框非常有用：可以非常快速地对点或另一个轴对齐矩形进行检查，并且其面积足够接近真实实体的面积以提供良好的近似值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检索实体的原点</span></span><br><span class="line">sf::FloatRect boundingBox = entity.<span class="built_in">getGlobalBounds</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查与点的碰撞</span></span><br><span class="line">sf::Vector2f point = ...;</span><br><span class="line"><span class="keyword">if</span> (boundingBox.<span class="built_in">contains</span>(point))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 碰撞！</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查与另一个框的碰撞（如另一个实体的边界框）</span></span><br><span class="line">sf::FloatRect otherBox = ...;</span><br><span class="line"><span class="keyword">if</span> (boundingBox.<span class="built_in">intersects</span>(otherBox))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 碰撞！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>getGlobalBounds</code>函数之所以这么命名，是因为它返回全局坐标系中实体的边界框，即在应用其所有变换（位置、旋转、缩放）之后</p>
+<p>还有另一个函数<code>getLocalBounds</code>返回实体在其<em>局部</em>坐标系中的边界框（在应用其变换之前）。例如，此函数可用于获取实体的初始大小，或执行更具体的计算。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/" class="post-title-link" itemprop="url">预备知识(Shape)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-14 15:13:42 / 修改时间：15:56:11" itemprop="dateCreated datePublished" datetime="2022-07-14T15:13:42+08:00">2022-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-shape.php">Shapes (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>SFML 提供了一组表示简单形状实体的类。每种类型的形状都是一个单独的类，但它们都派生自同一个基类，以便它们可以访问相同的公共特征子集。然后，每个类都添加自己的属性：圆类的半径属性、矩形类的大小、多边形类的点等。</p>
+<h1 id="常见形状属性"><a href="#常见形状属性" class="headerlink" title="常见形状属性"></a>常见形状属性</h1><h2 id="变换（位置、旋转、比例）"><a href="#变换（位置、旋转、比例）" class="headerlink" title="变换（位置、旋转、比例）"></a>变换（位置、旋转、比例）</h2><p>这些属性是所有 SFML 图形类通用的，因此在单独的教程 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-transform.php">Transforming entities</a>介绍了这些属性：</p>
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><p>形状的基本属性之一是其颜色。您可以使用<code>setFillColor</code>函数进行更改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::CircleShape <span class="title">shape</span><span class="params">(<span class="number">50.f</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将形状颜色设置为绿色</span></span><br><span class="line">shape.<span class="built_in">setFillColor</span>(sf::<span class="built_in">Color</span>(<span class="number">100</span>, <span class="number">250</span>, <span class="number">50</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png" alt="graphics-shape-circle"></p>
+<h2 id="轮廓"><a href="#轮廓" class="headerlink" title="轮廓"></a>轮廓</h2><p>形状可以有轮廓。可以使用<code>SetOutlineHickness</code>和<code>setOutlineColor</code>函数设置轮廓的厚度和颜色。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::CircleShape <span class="title">shape</span><span class="params">(<span class="number">50.f</span>)</span></span>;</span><br><span class="line">shape.<span class="built_in">setFillColor</span>(sf::<span class="built_in">Color</span>(<span class="number">150</span>, <span class="number">50</span>, <span class="number">250</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置一个 10 像素宽的橙色轮廓</span></span><br><span class="line">shape.<span class="built_in">setOutlineThickness</span>(<span class="number">10.f</span>);</span><br><span class="line">shape.<span class="built_in">setOutlineColor</span>(sf::<span class="built_in">Color</span>(<span class="number">250</span>, <span class="number">150</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-outline.png" alt="graphics-shape-outline"></p>
+<p>默认情况下，轮廓从形状向外挤出（例如，如果有一个半径为10、轮廓厚度为5的圆，则圆的总半径为15）。通过设置负厚度，可以使其向形状中心挤出。<br>要禁用轮廓，请将其厚度设置为0。如果只需要轮廓，可以将填充颜色设置为<code>sf：：color：：Transparent</code>。</p>
+<h2 id="纹理"><a href="#纹理" class="headerlink" title="纹理"></a>纹理</h2><p><code>shapes</code>也可以有<code>texture</code>，就像 <code>sprites</code>一样。要指定要映射到形状的纹理的一部分，必须使用<code>setTextureRect</code>函数。它需要纹理矩形映射到形状的边界矩形。这种方法没有提供最大的灵活性，但比单独设置形状每个点的纹理坐标更容易使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::CircleShape <span class="title">shape</span><span class="params">(<span class="number">50</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 100x100 带纹理的矩形映射到形状</span></span><br><span class="line">shape.<span class="built_in">setTexture</span>(&amp;texture); <span class="comment">// texture是一个 sf::Texture</span></span><br><span class="line">shape.<span class="built_in">setTextureRect</span>(sf::<span class="built_in">IntRect</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure>
+
+<p>请注意，轮廓没有纹理。</p>
+<p>重要的是要知道纹理是用形状的填充颜色调制（乘以）的。如果其填充颜色为<code>sf：：color：：white</code>，则纹理将显示为未修改。</p>
+<p>要禁用纹理，请调用<code>setTexture（NULL）</code>。</p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-texture.png" alt="graphics-shape-texture"></p>
+<h1 id="绘制形状"><a href="#绘制形状" class="headerlink" title="绘制形状"></a>绘制形状</h1><p>绘制形状就像绘制任何其他 SFML 实体一样简单：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.<span class="built_in">draw</span>(shape);</span><br></pre></td></tr></table></figure>
+
+<h1 id="内置形状类型"><a href="#内置形状类型" class="headerlink" title="内置形状类型"></a>内置形状类型</h1><h2 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h2><p>若要绘制矩形，可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RectangleShape.php"><code>sf::RectangleShape</code></a> 类。它只有一个属性：矩形的大小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// define a 120x50 rectangle</span></span><br><span class="line"><span class="function">sf::RectangleShape <span class="title">rectangle</span><span class="params">(sf::Vector2f(<span class="number">120.f</span>, <span class="number">50.f</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// change the size to 100x100</span></span><br><span class="line">rectangle.<span class="built_in">setSize</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">100.f</span>, <span class="number">100.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-rectangle.png" alt="graphics-shape-rectangle"></p>
+<h2 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h2><p>圆圈由 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1CircleShape.php"><code>sf::CircleShape</code></a> 类表示。它有两个属性：半径和边数。边数是一个可选属性，它允许您调整圆的“质量”：圆必须由具有多条边的多边形近似（图形卡无法直接绘制完美的圆），并且此属性定义了圆近似将具有多少条边。如果你画小圆圈，你可能只需要几个边。如果您绘制大圆圈或缩放常规圆圈，则很可能需要更多的边。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个半径 = 200 的圆</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">circle</span><span class="params">(<span class="number">200.f</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将半径更改为 40</span></span><br><span class="line">circle.<span class="built_in">setRadius</span>(<span class="number">40.f</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将边数（点）更改为 100</span></span><br><span class="line">circle.<span class="built_in">setPointCount</span>(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-circle.png" alt="graphics-shape-circle"></p>
+<h2 id="正多边形"><a href="#正多边形" class="headerlink" title="正多边形"></a>正多边形</h2><p>规多边形没有专用类，实际上您可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1CircleShape.php"><code>sf:;CircleShape</code></a> 类来表示任意数量的边的常规多边形：由于圆由具有多条边的多边形近似，因此您只需要使用边数即可获得所需的多边形。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1CircleShape.php"><code>sf::CircleShape</code></a>有3个点是一个三角形，有4个点是一个正方形，依此类推。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个三角形</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">triangle</span><span class="params">(<span class="number">80.f</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个正方形</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">square</span><span class="params">(<span class="number">80.f</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个八边形</span></span><br><span class="line"><span class="function">sf::CircleShape <span class="title">octagon</span><span class="params">(<span class="number">80.f</span>, <span class="number">8</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-regular.png" alt="graphics-shape-regular"></p>
+<h2 id="凸形"><a href="#凸形" class="headerlink" title="凸形"></a>凸形</h2><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a> 类是终极形状类：它允许您定义任何<em>凸</em>形状。SFML 无法绘制凹面形状。如果需要绘制凹面形状，则必须将其拆分为多个凸面。</p>
+<p>若要构造凸形状，必须首先设置它应具有的点数，然后定义点。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个空的形状</span></span><br><span class="line">sf::ConvexShape convex;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将其调整为 5 点</span></span><br><span class="line">convex.<span class="built_in">setPointCount</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义点</span></span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">0</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">0.f</span>, <span class="number">0.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">1</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">150.f</span>, <span class="number">10.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">2</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">120.f</span>, <span class="number">90.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">3</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">30.f</span>, <span class="number">100.f</span>));</span><br><span class="line">convex.<span class="built_in">setPoint</span>(<span class="number">4</span>, sf::<span class="built_in">Vector2f</span>(<span class="number">0.f</span>, <span class="number">50.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><strong>定义点的顺序非常重要。它们必须<em>按</em>顺时针或逆时针顺序定义。如果以不一致的顺序定义它们，则形状的构造将不正确</strong></p>
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-convex.png" alt="graphics-shape-convex"></p>
+<p>尽管 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a> 的名称暗示它应该仅用于表示凸形状，但它的要求稍微宽松一些。实际上，您的形状必须满足的唯一要求是，如果您继续绘制从其<em>重心</em>到其所有点的线条，则必须以相同的顺序绘制这些线条。您不得“跳到前一行后面”。在内部，凸形形状是使用<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Triangle_fan">三角形风扇</a>自动构造的，因此，如果您的形状可由三角形风扇表示，则可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a>。有了这个宽松的定义，例如，您可以使用<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1ConvexShape.php"><code>sf::ConvexShape</code></a>绘制星星。</p>
+<h2 id="线"><a href="#线" class="headerlink" title="线"></a>线</h2><p>线条没有形状类。原因很简单：如果你的线有一个粗细，它是一个矩形。如果没有，可以用直线基元绘制。</p>
+<p>带粗细的线条：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::RectangleShape <span class="title">line</span><span class="params">(sf::Vector2f(<span class="number">150.f</span>, <span class="number">5.f</span>))</span></span>;</span><br><span class="line">line.<span class="built_in">rotate</span>(<span class="number">45.f</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-line-rectangle.png" alt="graphics-shape-line-rectangle"></p>
+<p>不带粗细的线条：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sf::Vertex line[] =</span><br><span class="line">&#123;</span><br><span class="line">    sf::<span class="built_in">Vertex</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">10.f</span>, <span class="number">10.f</span>)),</span><br><span class="line">    sf::<span class="built_in">Vertex</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">150.f</span>, <span class="number">150.f</span>))</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">window.<span class="built_in">draw</span>(line, <span class="number">2</span>, sf::Lines);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-line-primitive.png" alt="graphics-shape-line-primitive"></p>
+<p>要了解有关顶点和基元的详细信息，可以阅读有关<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php">顶点数组的</a>教程。</p>
+<h2 id="自定义形状类型"><a href="#自定义形状类型" class="headerlink" title="自定义形状类型"></a>自定义形状类型</h2><p>可以使用自己的形状类型扩展形状类集。为此，您必须从 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Shape.php"><code>sf::Shape</code></a> 派生并覆盖两个函数：</p>
+<ul>
+<li><code>getPointCount</code>：返回形状中的点数</li>
+<li><code>getPoint</code>：返回形状的点</li>
+</ul>
+<p>每当形状中的任何点发生更改时，还必须调用受保护的函数，以便基类得到通知并可以更新其内部几何。<code>update()</code></p>
+<p>下面是自定义形状类的完整示例：椭圆形状。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">EllipseShape</span> : <span class="keyword">public</span> sf::Shape</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">EllipseShape</span><span class="params">(<span class="type">const</span> sf::Vector2f&amp; radius = sf::Vector2f(<span class="number">0.f</span>, <span class="number">0.f</span>))</span> :</span></span><br><span class="line"><span class="function">    m_radius(radius)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">        <span class="built_in">update</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setRadius</span><span class="params">(<span class="type">const</span> sf::Vector2f&amp; radius)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m_radius = radius;</span><br><span class="line">        <span class="built_in">update</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">const</span> sf::Vector2f&amp; <span class="title">getRadius</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> m_radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> std::<span class="type">size_t</span> <span class="title">getPointCount</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">30</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> sf::Vector2f <span class="title">getPoint</span><span class="params">(std::<span class="type">size_t</span> index)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">static</span> <span class="type">const</span> <span class="type">float</span> pi = <span class="number">3.141592654f</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">float</span> angle = index * <span class="number">2</span> * pi / <span class="built_in">getPointCount</span>() - pi / <span class="number">2</span>;</span><br><span class="line">        <span class="type">float</span> x = std::<span class="built_in">cos</span>(angle) * m_radius.x;</span><br><span class="line">        <span class="type">float</span> y = std::<span class="built_in">sin</span>(angle) * m_radius.y;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sf::<span class="built_in">Vector2f</span>(m_radius.x + x, m_radius.y + y);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> :</span><br><span class="line"></span><br><span class="line">    sf::Vector2f m_radius;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-ellipse.png" alt="graphics-shape-ellipse"></p>
+<h2 id="抗锯齿形状"><a href="#抗锯齿形状" class="headerlink" title="抗锯齿形状"></a>抗锯齿形状</h2><p>没有消除单个形状锯齿的选项。要获得消除锯齿的形状（即具有平滑边缘的形状），您必须在创建窗口时使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/structsf_1_1ContextSettings.php"><code>sf：：ContextSettings</code></a> 结构的相应属性全局启用消除锯齿。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sf::ContextSettings settings;</span><br><span class="line">settings.antialiasingLevel = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">sf::RenderWindow <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;SFML shapes&quot;</span>, sf::Style::Default, settings)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Shape/graphics-shape-antialiasing.png" alt="graphics-shape-antialiasing"></p>
+<p>请记住，抗锯齿可用性取决于图形卡：它可能不支持它，或者在驱动程序设置中强制禁用它。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Text-and-fonts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/14/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Text-and-fonts/" class="post-title-link" itemprop="url">预备知识(Text and fonts)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-14 08:50:42 / 修改时间：15:13:50" itemprop="dateCreated datePublished" datetime="2022-07-14T08:50:42+08:00">2022-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-text.php">Text and fonts (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="加载字体"><a href="#加载字体" class="headerlink" title="加载字体"></a>加载字体</h1><p>在绘制任何文本之前，您需要有一个可用的字体，就像任何其他打印文本的程序一样。字体封装在 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Font.php"><code>sf：：Font</code></a> 类中，该类提供三个主要功能：加载字体、从中获取字形（即可视字符）以及读取其属性。</p>
+<p>加载字体的最常见方法是从磁盘上的文件加载，这是通过loadFromFile函数完成的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sf::Font font;</span><br><span class="line"><span class="keyword">if</span> (!font.<span class="built_in">loadFromFile</span>(<span class="string">&quot;arial.ttf&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果要加载字体，则需要将字体文件包含在应用程序中，就像所有其他资源（图像，声音等）一样。</p>
+<p>还可以从内存 loadFromMemory() 或<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-stream.php">自定义输入流</a> loadFromStream() 加载字体文件。</p>
+<p>SFML 支持最常见的字体格式。完整列表可在 API 文档中找到。</p>
+<h1 id="绘制文本"><a href="#绘制文本" class="headerlink" title="绘制文本"></a>绘制文本</h1><p>使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Text.php"><code>sf::Text</code></a> 类绘制文本</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">sf::Text text;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选择字体</span></span><br><span class="line">text.<span class="built_in">setFont</span>(font); <span class="comment">// 字体是 sf::Font</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置要显示的字符串</span></span><br><span class="line">text.<span class="built_in">setString</span>(<span class="string">&quot;Hello world&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置字符大小</span></span><br><span class="line">text.<span class="built_in">setCharacterSize</span>(<span class="number">24</span>); <span class="comment">// 以像素为单位，而不是点！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置颜色</span></span><br><span class="line">text.<span class="built_in">setFillColor</span>(sf::Color::Red);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置文本样式</span></span><br><span class="line">text.<span class="built_in">setStyle</span>(sf::Text::Bold | sf::Text::Underlined);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在主循环内，在 window.clear() 和 window.display() 之间</span></span><br><span class="line">window.<span class="built_in">draw</span>(text);</span><br></pre></td></tr></table></figure>
+
+<p>文本也可以转换：它们具有位置，方向和比例。所涉及的函数与 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Sprite.php"><code>sf::Sprite</code></a> 类和其他 SFML 实体的函数相同。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-transform.php">转换实体</a>教程中介绍了这些方法。</p>
+<h1 id="如何避免非ASCII字符的问题"><a href="#如何避免非ASCII字符的问题" class="headerlink" title="如何避免非ASCII字符的问题"></a>如何避免非ASCII字符的问题</h1><p>正确处理非 ASCII 字符（如重音欧洲、阿拉伯或中文字符）可能很棘手。它需要很好地理解解释和绘制文本过程中涉及的各种编码。为了避免为这些编码而烦恼，有一个简单的解决方案：使用<em>宽文本字符串</em>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text.<span class="built_in">setString</span>(<span class="string">L&quot;יטאח&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>正是字符串前面的这个简单的“L”前缀通过告诉编译器生成一个宽字符串来使其工作。宽字符串在C++中是一个奇怪的野兽：标准没有说明它们的大小（16位？32位？），也没有说明它们使用的编码（UTF-16？UTF-32），但在大多数平台上它们会产生Unicode字符串，SFML知道如何正确处理它们。</p>
+<p>请注意，C++11 标准支持新的字符类型和前缀来构建 UTF-8、UTF-16 和 UTF-32 字符串文本，但 SFML 尚不支持它们。</p>
+<p>这似乎很明显，但你还必须确保使用的字体包含要绘制的字符。实际上，字体不包含所有可能字符的字形（Unicode标准中有超过100000个！），例如，阿拉伯字体将无法显示日语文本。</p>
+<h1 id="创建自己的文本类"><a href="#创建自己的文本类" class="headerlink" title="创建自己的文本类"></a>创建自己的文本类</h1><p>如果 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Text.php"><code>sf::Text</code></a> 太有限，或者你想对预呈现的字形执行其他操作，<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Font.php"><code>sf::Font</code></a> 会提供你需要的一切。</p>
+<p>可以检索包含特定大小的所有预渲染字形的纹理：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> sf::Texture&amp; texture = font.<span class="built_in">getTexture</span>(characterSize);</span><br></pre></td></tr></table></figure>
+
+<p>请务必注意，当请求字形时，会将其添加到纹理中。有太多的字符（请记住，超过100000个），以至于在加载字体时无法全部生成它们。相反，当您调用getGlyph函数时，它们会动态呈现（见下文）。</p>
+<p>要对字体纹理执行有意义的操作，必须获取其中包含的字形的纹理坐标：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sf::Glyph glyph = font.<span class="built_in">getGlyph</span>(character, characterSize, bold);</span><br></pre></td></tr></table></figure>
+
+<p><code>character</code>是要获取其字形的字符的 UTF-32 代码。还必须指定字符大小，以及是需要粗体版本还是常规版本的字形。</p>
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Glyph.php"><code>sf::Glyph</code></a>结构包含三个成员：</p>
+<ul>
+<li><code>textureRect</code>包含纹理中字形的纹理坐标</li>
+<li><code>bounds</code>包含字形的边框，这有助于相对于文本的基线定位</li>
+<li><code>advance</code>是要应用于获取文本中下一个字形的起始位置的水平偏移量</li>
+</ul>
+<p>你还可以获取字体的其他一些指标，例如两个字符之间的字距微调或行距（始终针对特定字符大小）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> lineSpacing = font.<span class="built_in">getLineSpacing</span>(characterSize);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> kerning = font.<span class="built_in">getKerning</span>(character1, character2, characterSize);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="一只小帆帆">
+      <meta itemprop="description" content="简介不了，慢慢观察">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帆帆的BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/" class="post-title-link" itemprop="url">预备知识(Sprites and textures)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-12 16:06:13" itemprop="dateCreated datePublished" datetime="2022-07-12T16:06:13+08:00">2022-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-14 08:52:04" itemprop="dateModified" datetime="2022-07-14T08:52:04+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-sprite.php">Sprites and textures (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
+<h1 id="它们是什么？"><a href="#它们是什么？" class="headerlink" title="它们是什么？"></a>它们是什么？</h1><p>texture是一个图像。但我们称之为“ texture”，因为它有一个非常特殊的角色：映射到2D实体。</p>
 <p>sprite只不过是一个纹理矩形。</p>
-<p><img src="/./%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png" alt="graphics-sprites-definition"></p>
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-definition.png" alt="graphics-sprites-definition"></p>
 <p>这就是<code>Sprite and texture</code>。</p>
+<h1 id="加载纹理"><a href="#加载纹理" class="headerlink" title="加载纹理"></a>加载纹理</h1><p>在创建任何精灵之前，我们需要一个有效的纹理。令人惊讶的是，在 SFML 中封装纹理的类是 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a>。由于纹理的唯一作用是加载并映射到图形实体，因此几乎所有的功能都是关于加载和更新纹理的。</p>
+<p>加载纹理的最常见方法是从磁盘上的图像文件加载，这是通过<code>loadFromFile</code>函数完成的</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sf::Texture texture;</span><br><span class="line"><span class="keyword">if</span> (!texture.<span class="built_in">loadFromFile</span>(<span class="string">&quot;image.png&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该函数有时可能会在没有明显原因的情况下失败。首先，检查 SFML 打印到标准输出的错误消息（检查控制台）。如果邮件无法打开文件，请确保<em>工作目录</em>（即任何文件路径将相对于其解释的目录）是您认为的目录：从桌面环境运行应用程序时，工作目录是可执行文件夹。但是，当您从 IDE（Visual Studio、Code：：Blocks 等）启动程序时，工作目录有时可能会设置为<em>项目</em>目录。这通常可以在项目设置中轻松更改。</p>
+</blockquote>
+<p>还可以从内存 （loadFromMemory）、<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/system-stream.php">自定义输入流</a> （loadFromStream） 或已加载的图像 （loadFromImage） 加载图像文件。后者从 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Image.php"><code>sf::Image</code></a> 加载纹理，它是一个实用程序类，可帮助存储和操作图像数据（修改像素、创建透明度通道等）。<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Image.php"><code>sf::Image</code></a>的像素保留在系统内存中，这确保了对它们的操作将尽可能快，这与驻留在视频内存中的纹理像素相反，因此检索或更新速度很慢，但绘制速度非常快。</p>
+<p>SFML 支持最常见的图像文件格式。完整列表可在 API 文档中找到。</p>
+<p>所有这些加载函数都有一个可选参数，如果要加载图像的较小部分，可以使用该参数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载一个从 (10, 10) 开始的 32x32 矩形</span></span><br><span class="line"><span class="keyword">if</span> (!texture.<span class="built_in">loadFromFile</span>(<span class="string">&quot;image.png&quot;</span>, sf::<span class="built_in">IntRect</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Rect.php"><code>sf::IntRect</code></a> 类是表示矩形的简单实用工具类型。其构造函数采用左上角的坐标和矩形的大小。</p>
+<p>如果你不想从图像加载纹理，而是希望直接从像素数组更新纹理，则可以将其创建为空，稍后再更新：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个空的 200x200 纹理</span></span><br><span class="line"><span class="keyword">if</span> (!texture.<span class="built_in">create</span>(<span class="number">200</span>, <span class="number">200</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// error...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，此时纹理的内容尚未定义。</p>
+<p>要更新现有纹理的像素，必须使用update函数。它对许多类型的数据源具有重载。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从像素数组更新纹理</span></span><br><span class="line">sf::Uint8* pixels = <span class="keyword">new</span> sf::Uint8[width * height * <span class="number">4</span>]; <span class="comment">// * 4 因为像素有 4 个分量 (RGBA)</span></span><br><span class="line">...</span><br><span class="line">texture.<span class="built_in">update</span>(pixels);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 sf::Image 更新纹理</span></span><br><span class="line">sf::Image image;</span><br><span class="line">...</span><br><span class="line">texture.<span class="built_in">update</span>(image);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从窗口的当前内容更新纹理</span></span><br><span class="line">sf::RenderWindow window;</span><br><span class="line">...</span><br><span class="line">texture.<span class="built_in">update</span>(window);</span><br></pre></td></tr></table></figure>
+
+<p>这些示例都假定源与纹理具有相同的大小。如果不是这种情况，即如果您只想更新纹理的一部分，则可以指定要更新的子矩形的坐标。有关更多详细信息，请参阅文档。</p>
+<p>此外，纹理具有两个属性，用于更改其渲染方式。</p>
+<p>第一个属性允许平滑纹理。平滑纹理会使像素边界不那么明显（但图像会更加模糊）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">texture.<span class="built_in">setSmooth</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-smooth.png" alt="graphics-sprites-smooth"></p>
+<p>第二个属性允许在单个精灵中重复平铺纹理。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">texture.<span class="built_in">setRepeated</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-repeated.png" alt="graphics-sprites-repeated"></p>
+<h1 id="现在可以拥有我的sprite了吗？"><a href="#现在可以拥有我的sprite了吗？" class="headerlink" title="现在可以拥有我的sprite了吗？"></a>现在可以拥有我的sprite了吗？</h1><p>创建子画面</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sf::Sprite sprite;</span><br><span class="line">sprite.<span class="built_in">setTexture</span>(texture);</span><br></pre></td></tr></table></figure>
+
+<p>最后画出来。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在主循环内，在 window.clear() 和 window.display() 之间</span></span><br><span class="line">window.<span class="built_in">draw</span>(sprite);</span><br></pre></td></tr></table></figure>
+
+<p>如果不希望 Sprite 使用整个纹理，可以设置其纹理矩形。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sprite.<span class="built_in">setTextureRect</span>(sf::<span class="built_in">IntRect</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>));</span><br></pre></td></tr></table></figure>
+
+<p>你也可以改变<code>Sprite</code>的颜色。设置的颜色将随精灵的纹理进行调制（相乘）。这也可以用于更改精灵的全局透明度<code>（alpha）</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sprite.<span class="built_in">setColor</span>(sf::<span class="built_in">Color</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>)); <span class="comment">// 绿色</span></span><br><span class="line">sprite.<span class="built_in">setColor</span>(sf::<span class="built_in">Color</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">128</span>)); <span class="comment">// 半透明</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/07/12/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Sprites-and-textures/graphics-sprites-color.png" alt="graphics-sprites-color"></p>
+<p>精灵也可以变换：它们有位置，方向和比例。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 位置</span></span><br><span class="line">sprite.<span class="built_in">setPosition</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">10.f</span>, <span class="number">50.f</span>)); <span class="comment">// 绝对位置</span></span><br><span class="line">sprite.<span class="built_in">move</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">5.f</span>, <span class="number">10.f</span>)); <span class="comment">// 相对于当前位置的偏移量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 回转</span></span><br><span class="line">sprite.<span class="built_in">setRotation</span>(<span class="number">90.f</span>); <span class="comment">// 绝对角度</span></span><br><span class="line">sprite.<span class="built_in">rotate</span>(<span class="number">15.f</span>); <span class="comment">// 相对于当前角度的偏移</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 规模</span></span><br><span class="line">sprite.<span class="built_in">setScale</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">0.5f</span>, <span class="number">2.f</span>)); <span class="comment">// 绝对比例因子</span></span><br><span class="line">sprite.<span class="built_in">scale</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">1.5f</span>, <span class="number">3.f</span>)); <span class="comment">// 相对于当前比例的因子</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，这三个转换的原点位于子画面的左上角。如果要将原点设置为其他点（例如，子画面的中心或其他角），则可以使用<code>setOrigin</code>函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sprite.<span class="built_in">setOrigin</span>(sf::<span class="built_in">Vector2f</span>(<span class="number">25.f</span>, <span class="number">25.f</span>));</span><br></pre></td></tr></table></figure>
+
+<p>由于转换函数对于所有<code>SFML</code>实体都是通用的，因此在单独的教程：<code>Transforming entities.</code>中对其进行了解释。</p>
+<h1 id="白色方块问题"><a href="#白色方块问题" class="headerlink" title="白色方块问题"></a>白色方块问题</h1><p>您已成功加载纹理，正确构造了子画面，并且…您现在在屏幕上看到的只是一个白色正方形。发生了什么事？</p>
+<p>这是一个常见的错误。设置子画面的纹理时，它在内部所做的就是存储指向纹理实例的指针。因此，如果纹理被破坏或移动到内存中的其他位置，则子画面最终会得到一个无效的纹理指针。</p>
+<p>当您编写此类函数时，会出现此问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">sf::Sprite <span class="title">loadSprite</span><span class="params">(std::string filename)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    sf::Texture texture;</span><br><span class="line">    texture.<span class="built_in">loadFromFile</span>(filename);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sf::<span class="built_in">Sprite</span>(texture);</span><br><span class="line">&#125; <span class="comment">// 错误：纹理在这里被破坏</span></span><br></pre></td></tr></table></figure>
+
+<p>你必须正确管理纹理的生存期，并确保只要任何子画面使用它们，它们就会存在。</p>
+<h1 id="使用尽可能少的纹理"><a href="#使用尽可能少的纹理" class="headerlink" title="使用尽可能少的纹理"></a>使用尽可能少的纹理</h1><p>使用尽可能少的纹理是一个很好的策略，原因很简单：更改当前纹理对于图形卡来说是一项昂贵的操作。绘制许多使用相同纹理的精灵将产生最佳性能。</p>
+<p>此外，使用单个纹理可以将静态几何体分组到单个实体中（每次调用只能使用一个纹理），这比一组多个实体的绘制速度快得多。批处理静态几何涉及其他类，因此超出了本教程的范围，有关更多详细信息，请参阅<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php">vertex array</a>教程。</p>
+<p>在创建动画工作表或切片集时，请牢记这一点：使用尽可能少的纹理。</p>
+<h1 id="用OpenGL使用sf-Texture"><a href="#用OpenGL使用sf-Texture" class="headerlink" title="用OpenGL使用sf::Texture"></a>用OpenGL使用sf::Texture</h1><p>如果您使用的是 OpenGL 而不是 SFML 的图形实体，您仍然可以使用 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a> 作为 OpenGL 纹理对象的包装器，并将其与 OpenGL 代码的其余部分一起使用。</p>
+<p>要绑定 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Texture.php"><code>sf::Texture</code></a> 进行绘制（基本上是<code>glBindTexture</code>），请调用静态函数：<code>bind</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sf::Texture texture;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定纹理</span></span><br><span class="line">sf::Texture::<span class="built_in">bind</span>(&amp;texture);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在此处绘制纹理 OpenGL 实体...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定无纹理</span></span><br><span class="line">sf::Texture::<span class="built_in">bind</span>(<span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -744,265 +1284,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="一只小帆帆">
-      <meta itemprop="description" content="简介不了，慢慢观察">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帆帆的BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Events-explained/" class="post-title-link" itemprop="url">预备知识(Events explained)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-09 20:03:03" itemprop="dateCreated datePublished" datetime="2022-07-09T20:03:03+08:00">2022-07-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-10 19:19:11" itemprop="dateModified" datetime="2022-07-10T19:19:11+08:00">2022-07-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-events.php#the-mousebuttonpressed-and-mousebuttonreleased-events">Events explained (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
-<h1 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h1><p> <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::Event</code></a>是一个<em>联合</em>，这意味着一次只有一个成员有效(联合的所有成员共享相同的内存空间)。有效成员是与事件类型匹配的成员，例如event。按键事件的按键。尝试读取任何其他成员将导致未定义的行为（很可能是随机或无效值）。</p>
-<p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::事件</code></a>实例由 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf::Window</code></a> 类的<code>pollEvent</code>(或<code>waitEvent</code>)函数填充。只有这两个函数可以生成有效的事件，任何尝试使用成功调用（或）未返回的<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Event.php"><code>sf::Event</code></a>都将导致与上面提到的相同的未定义行为。</p>
-<p>典型的事件循环：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">sf::Event event;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 检查事件种类</span></span><br><span class="line">    <span class="keyword">switch</span> (event.type)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 窗口关闭</span></span><br><span class="line">        <span class="keyword">case</span> sf::Event::Closed:</span><br><span class="line">            window.<span class="built_in">close</span>();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 按键按下</span></span><br><span class="line">        <span class="keyword">case</span> sf::Event::KeyPressed:</span><br><span class="line">            ...</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 不处理其他类型的事件</span></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="已关闭事件（The-Closed-event）"><a href="#已关闭事件（The-Closed-event）" class="headerlink" title="已关闭事件（The Closed event）"></a>已关闭事件（The Closed event）</h1><p>当用户想要关闭窗口时，通过窗口管理器提供的任何可能的方法（“关闭”按钮，键盘快捷键等）触发该事件。此事件仅表示关闭请求，收到事件时窗口尚未关闭。</p>
-<p>典型的代码将仅响应此事件进行调用，以实际关闭窗口。但是，您可能还希望先执行其他操作，例如保存当前应用程序状态或询问用户要执行的操作。如果您不执行任何操作，窗口将保持打开状态。</p>
-<p>sf::Event联合中没有与此事件关联的成员。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::Closed)</span><br><span class="line">    window.<span class="built_in">close</span>();</span><br></pre></td></tr></table></figure>
-
-<h1 id="已调整大小事件（The-Resized-event）"><a href="#已调整大小事件（The-Resized-event）" class="headerlink" title="已调整大小事件（The Resized event）"></a>已调整大小事件（The Resized event）</h1><p>当通过用户操作或通过调用<code>window.setSize</code>以编程方式调整窗口大小时将触发该事件来设置大小。</p>
-<p>可以使用此事件来调整渲染设置：如果直接使用 OpenGL，则为视口，如果使用 sfml-graphics，则为当前视图。</p>
-<p>与此事件关联的成员是<code>event.size</code>。它包含窗口的新大小。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::Resized)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new width: &quot;</span> &lt;&lt; event.size.width &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new height: &quot;</span> &lt;&lt; event.size.height &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="失去焦点和获得焦点事件（The-LostFocus-and-GainedFocus-events）"><a href="#失去焦点和获得焦点事件（The-LostFocus-and-GainedFocus-events）" class="headerlink" title="失去焦点和获得焦点事件（The LostFocus and GainedFocus events）"></a>失去焦点和获得焦点事件（The LostFocus and GainedFocus events）</h1><p>当窗口失去&#x2F;获得焦点时，会触发<code>sf::Event::LostFocus</code>和<code>sf::Event::GainedFocus</code>事件，这在用户切换当前活动窗口时发生。当窗口失焦时，它不会接收键盘事件。</p>
-<p>例如，如果您想在窗口处于非活动状态时暂停游戏，可以使用此事件。</p>
-<p>sf::Event联合中没有与这些事件关联的成员。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::LostFocus)</span><br><span class="line">    myGame.<span class="built_in">pause</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (event.type == sf::Event::GainedFocus)</span><br><span class="line">    myGame.<span class="built_in">resume</span>();</span><br></pre></td></tr></table></figure>
-
-<h1 id="文本输入事件（The-TextEntered-event）"><a href="#文本输入事件（The-TextEntered-event）" class="headerlink" title="文本输入事件（The TextEntered event）"></a>文本输入事件（The TextEntered event）</h1><p>键入字符时会触发<code>sf::Event::TextEntered</code>事件。这不能与<code>KeyPressed</code>事件混淆,<code>TextEntered</code>解释用户输入并生成适当的可打印字符。例如，在法语键盘上按“^”然后按“e”将生成两个按键事件，但一个包含“ê”字符的<code>TextEntered</code>事件。它适用于操作系统提供的所有输入方法，即使是最具体或最复杂的输入方法。</p>
-<p>此事件通常用于捕获文本字段中的用户输入。</p>
-<p>与此事件关联的成员是<code>event</code>。文本，它包含输入字符的Unicode值。您可以将其直接放入sf::string中，也可以在确保其处于ASCII范围（0-127）后将其转换为字符。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::TextEntered)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.text.unicode &lt; <span class="number">128</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;ASCII character typed: &quot;</span> &lt;&lt; <span class="built_in">static_cast</span>&lt;<span class="type">char</span>&gt;(event.text.unicode) &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>由于它们是Unicode标准的一部分，因此此事件会生成一些不可打印的字符，如backspace。在大多数情况下，您需要过滤掉它们。</p>
-<h1 id="释放-x2F-按下键盘键事件（The-KeyPressed-and-KeyReleased-events）"><a href="#释放-x2F-按下键盘键事件（The-KeyPressed-and-KeyReleased-events）" class="headerlink" title="释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）"></a>释放&#x2F;按下键盘键事件（The KeyPressed and KeyReleased events）</h1><p>当按下&#x2F;释放键盘键时，会触发<code>sf::Event::KeyPressed</code> 和<code>sf::Event::KeyReleased</code>事件。</p>
-<p>如果按住一个键，将以默认操作系统延迟（即，在文本编辑器中按住字母时应用的相同延迟）生成多个按键事件。要禁用重复的按键事件，可以调用<code>window.setKeyRepeatEnabled</code>（false）。另一方面，很明显，<code>KeyReleased</code>事件永远不会重复。</p>
-<p>有时，人们试图直接对按键事件做出反应，以实现平稳的运动。这样做不会产生预期的效果，因为当您按住一个键时，您只会得到几个事件（请记住，重复延迟）。要实现事件的平滑移动，必须使用一个布尔值，该布尔值在按下键时设置，在释放键时清除；然后，只要设置了布尔值，就可以移动（与事件无关）。另一个（更容易）实现平滑移动的解决方案是使用<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php"><code>sf::Keyboard</code></a> 的实时键盘输入（请参阅专用教程）。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::KeyPressed)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.key.code == sf::Keyboard::Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;the escape key was pressed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;control:&quot;</span> &lt;&lt; event.key.control &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;alt:&quot;</span> &lt;&lt; event.key.alt &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;shift:&quot;</span> &lt;&lt; event.key.shift &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;system:&quot;</span> &lt;&lt; event.key.system &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="鼠标滚轮滚动事件（The-MouseWheelScrolled-event）"><a href="#鼠标滚轮滚动事件（The-MouseWheelScrolled-event）" class="headerlink" title="鼠标滚轮滚动事件（The MouseWheelScrolled event）"></a>鼠标滚轮滚动事件（The MouseWheelScrolled event）</h1><p>当鼠标滚轮向上或向下移动时，会触发<code>sf::Event::MouseWheelScrolled</code>事件，如果鼠标支持它，也会触发横向事件。</p>
-<p>与此事件关联的成员是 <code>event.mouseWheelScroll</code>, 它包含滚轮移动的刻度数、滚轮的方向以及鼠标光标的当前位置。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseWheelScrolled)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: vertical&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (event.mouseWheelScroll.wheel == sf::Mouse::HorizontalWheel)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: horizontal&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;wheel type: unknown&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;wheel movement: &quot;</span> &lt;&lt; event.mouseWheelScroll.delta &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mouse x: &quot;</span> &lt;&lt; event.mouseWheelScroll.x &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mouse y: &quot;</span> &lt;&lt; event.mouseWheelScroll.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="鼠标按钮按下和释放事件（The-MouseButtonPressed-and-MouseButtonReleased-events）"><a href="#鼠标按钮按下和释放事件（The-MouseButtonPressed-and-MouseButtonReleased-events）" class="headerlink" title="鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）"></a>鼠标按钮按下和释放事件（The MouseButtonPressed and MouseButtonReleased events）</h1><p>按下&#x2F;释放鼠标按钮时，会触发<code>sf::Event::MouseButtonPressed</code>和<code>sf::Event::MouseButtonReleased</code>事件。</p>
-<p>SFML支持5个鼠标按钮：左、右、中（滚轮）、额外#1和额外#2（侧按钮）。</p>
-<p>与这些事件关联的成员是<code>event.mouseButton</code>。它包含按下&#x2F;释放按钮的代码，以及鼠标光标的当前位置。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseButtonPressed)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.mouseButton.button == sf::Mouse::Right)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;the right button was pressed&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;mouse x: &quot;</span> &lt;&lt; event.mouseButton.x &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;mouse y: &quot;</span> &lt;&lt; event.mouseButton.y &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="鼠标移动事件（The-MouseMoved-event）"><a href="#鼠标移动事件（The-MouseMoved-event）" class="headerlink" title="鼠标移动事件（The MouseMoved event）"></a>鼠标移动事件（The MouseMoved event）</h1><p>当鼠标在窗口内移动时，将触发<code>sf::Event::MouseMoved</code>事件。</p>
-<p>即使窗口未聚焦，也会触发此事件。但是，只有当鼠标在窗口的内部区域内移动时才会触发，而不是在标题栏或边框上移动时。</p>
-<p>与此事件关联的成员是<code>event.mouseMove</code>，它包含鼠标光标相对于窗口的当前位置。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseMoved)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new mouse x: &quot;</span> &lt;&lt; event.mouseMove.x &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;new mouse y: &quot;</span> &lt;&lt; event.mouseMove.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="鼠标进入和离开事件（The-MouseEntered-and-MouseLeft-event"><a href="#鼠标进入和离开事件（The-MouseEntered-and-MouseLeft-event" class="headerlink" title="鼠标进入和离开事件（The MouseEntered and MouseLeft event)"></a>鼠标进入和离开事件（The MouseEntered and MouseLeft event)</h1><p>当鼠标光标进入&#x2F;离开窗口时，会触发<code>sf::Event::MouseEntered</code>和<code>sf::Event::MouseLeft</code>事件。</p>
-<p><code>sf::Event</code>事件联合中没有与这些事件关联的成员。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseEntered)</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;the mouse cursor has entered the window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (event.type == sf::Event::MouseLeft)</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;the mouse cursor has left the window&quot;</span> &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Opening-and-managing-a-SFML-window)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="一只小帆帆">
-      <meta itemprop="description" content="简介不了，慢慢观察">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帆帆的BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/09/%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86-Opening-and-managing-a-SFML-window)/" class="post-title-link" itemprop="url">预备知识(Opening and managing a SFML window)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-07-09 16:18:05 / 修改时间：18:24:20" itemprop="dateCreated datePublished" datetime="2022-07-09T16:18:05+08:00">2022-07-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">C++制作小游戏</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-%E5%88%B6%E4%BD%9C%E5%B0%8F%E6%B8%B8%E6%88%8F/%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">准备工作</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>官方文档：<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-window.php">Opening and managing a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a></p>
-<h1 id="打开一个Window"><a href="#打开一个Window" class="headerlink" title="打开一个Window"></a>打开一个Window</h1><p>SFML中的窗口由sf：：Window类定义。可直接创建和打开窗口：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/Window.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Window <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;My window&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第一个参数：定义了窗口的大小（宽度和高度），这里是800*600像素的窗口。</p>
-<p>第二个参数：表示的是窗口的标题</p>
-<p>第三个参数（可选）：窗口的样式</p>
-<table>
-<thead>
-<tr>
-<th>参数值</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>sf::Style::None</td>
-<td>无装饰（不能与其他样式结合使用）</td>
-</tr>
-<tr>
-<td>sf::Style::Titlebar</td>
-<td>窗口有一个标题栏</td>
-</tr>
-<tr>
-<td>sf::Style::Resize</td>
-<td>窗口可以调整大小并具有最大化按钮</td>
-</tr>
-<tr>
-<td>sf::Style::Close</td>
-<td>窗口有一个关闭按钮</td>
-</tr>
-<tr>
-<td>sf::Style::Fullscreen</td>
-<td>该窗口以全屏模式显示（不能与其他样式结合使用）</td>
-</tr>
-<tr>
-<td>sf::Style::Default</td>
-<td>默认样式（Titlebar|Resize|Close）</td>
-</tr>
-</tbody></table>
-<p>第四个参数（可选）：定义了OpenGL特定的选项，在<a target="_blank" rel="noopener" href="https://www.sfml-dev.org/tutorials/2.5/window-opengl.php">Using OpenGL in a SFML window (SFML &#x2F; Learn &#x2F; 2.5 Tutorials) (sfml-dev.org)</a>进行了详细的解释</p>
-<h1 id="使window有趣起来"><a href="#使window有趣起来" class="headerlink" title="使window有趣起来"></a>使window有趣起来</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;SFML/Window.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">sf::Window <span class="title">window</span><span class="params">(sf::VideoMode(<span class="number">800</span>, <span class="number">600</span>), <span class="string">&quot;My window&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果窗口是打开的，一直运行这个程序</span></span><br><span class="line">    <span class="keyword">while</span> (window.<span class="built_in">isOpen</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 检查自循环的上次迭代以来触发的所有窗口事件</span></span><br><span class="line">        sf::Event event;</span><br><span class="line">        <span class="keyword">while</span> (window.<span class="built_in">pollEvent</span>(event))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// &quot;close requested&quot; event: 关闭窗口</span></span><br><span class="line">            <span class="keyword">if</span> (event.type == sf::Event::Closed)</span><br><span class="line">                window.<span class="built_in">close</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面代码将打开一个窗口，并在用户关闭它时终止。</p>
-<p>首先，我们添加了一个<code>while</code>循环，控制窗口的不断更新，直到窗口关闭，我们一般称这个循环为主循环。</p>
-<p>我们在循环中做的第一件事就是检查发生的事件。对于窗口事件来说，我们通常用 <code>bool Window::pollEvent(sf::Event&amp; event)</code> 函数，如果有事件将要被使用的话，函数会返回 <code>true</code>， <code>event</code>参数会对应某个具体事件。这里再次使用了<code>while</code>循环，以便在有多个事件时同时处理所有挂起的事件。</p>
-<p>每当我们收到一个事件时，我们必须检查它的类型（窗口关闭？按键？鼠标移动？操纵杆已连接？…），如果我们对它感兴趣，就会做出相应的反应。在这种情况下，我们只关心事件，当用户想要关闭窗口时会触发该事件。此时，窗口仍处于打开状态，我们必须使用函数显式关闭它<code>event.type == sf::Event::Closed</code>。这使我们能够在窗口关闭之前执行某些操作，例如保存应用程序的当前状态或显示消息。</p>
-<h1 id="绘制window"><a href="#绘制window" class="headerlink" title="绘制window"></a>绘制window</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 改变窗口位置（相对于桌面）</span></span><br><span class="line">window.<span class="built_in">setPosition</span>(sf::<span class="built_in">Vector2i</span>(<span class="number">10</span>, <span class="number">50</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改变窗口的大小</span></span><br><span class="line">window.<span class="built_in">setSize</span>(sf::<span class="built_in">Vector2u</span>(<span class="number">640</span>, <span class="number">480</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更改窗口的标题</span></span><br><span class="line">window.<span class="built_in">setTitle</span>(<span class="string">&quot;SFML window&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取窗口大小</span></span><br><span class="line">sf::Vector2u size = window.<span class="built_in">getSize</span>();</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> width = size.x;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> height = size.y;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查窗口是否有焦点</span></span><br><span class="line"><span class="type">bool</span> focus = window.<span class="built_in">hasFocus</span>();</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>参考 API 文档，可以获取 <a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Window.php"><code>sf：：Window</code></a> 函数的完整列表。</p>
-<h1 id="控制帧速率"><a href="#控制帧速率" class="headerlink" title="控制帧速率"></a>控制帧速率</h1><p>当应用程序运行得很快时，可能会有视觉伪影，例如撕裂。因为应用程序的刷新率与监视器的垂直频率不同步，所以前一帧的底部与下一帧的顶部混合在一起。</p>
-<p>可以激活<em>垂直同步</em>来解决这个问题。在如下调用之后，应用程序将以与监视器刷新率相同的频率运行。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.<span class="built_in">setVerticalSyncEnabled</span>(<span class="literal">true</span>); <span class="comment">// 创建窗口后调用一次</span></span><br></pre></td></tr></table></figure>
-
-<p>想要应用程序以给定的帧速率运行，使用如下命令：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.<span class="built_in">setFramerateLimit</span>(<span class="number">60</span>); <span class="comment">// 创建窗口后调用一次</span></span><br></pre></td></tr></table></figure>
-
-<p>两者不可同时使用！</p>
-<h1 id="关于Window的一些注意事项"><a href="#关于Window的一些注意事项" class="headerlink" title="关于Window的一些注意事项"></a>关于Window的一些注意事项</h1><h2 id="可以创建多个线程"><a href="#可以创建多个线程" class="headerlink" title="可以创建多个线程"></a>可以创建多个线程</h2><p>SFML允许你创建多个窗口，并在主线程中处理它们，或者每个窗口在自己的线程中处理它们，但是不要忘记为每个窗口设置一个事件循环。</p>
-<h3 id="尚不支持多个显示器"><a href="#尚不支持多个显示器" class="headerlink" title="尚不支持多个显示器"></a>尚不支持多个显示器</h3><p>SFML 不会显式管理多个监视器。因此，你将无法选择窗口显示在哪个监视器上，并且无法创建多个全屏窗口。</p>
-<h3 id="在-Windows-上，大于桌面的窗口将无法正常运行"><a href="#在-Windows-上，大于桌面的窗口将无法正常运行" class="headerlink" title="在 Windows 上，大于桌面的窗口将无法正常运行"></a>在 Windows 上，大于桌面的窗口将无法正常运行</h3><p>出于某种原因，Windows不喜欢比桌面大的窗口。这包括使用创建的窗口：添加了窗口装饰（边框和标题栏），你最终会得到一个比桌面略大的窗口。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1068,7 +1354,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
