@@ -28,7 +28,7 @@
 <meta property="og:description" content="SFML中的时间与许多其他时间是 uint32 毫秒数或浮点数秒数的库不同，SFML 不会对时间值施加任何特定的单位或类型。相反，它通过一个灵活的类将这个选择留给用户：sf::Time。所有操作时间值的 SFML 类和函数都使用此类。 sf::Time 表示一个时间段（换句话说，两个事件之间经过的时间）。它不是一个日期时间类，它将当前年&#x2F;月&#x2F;日&#x2F;小时&#x2F;分钟&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-11T00:32:20.000Z">
-<meta property="article:modified_time" content="2022-07-11T01:35:20.067Z">
+<meta property="article:modified_time" content="2022-07-22T11:37:04.561Z">
 <meta property="article:author" content="一只小帆帆">
 <meta property="article:tag" content="SFML">
 <meta property="article:tag" content="system module">
@@ -212,10 +212,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-11 08:32:20 / 修改时间：09:35:20" itemprop="dateCreated datePublished" datetime="2022-07-11T08:32:20+08:00">2022-07-11</time>
+              <time title="创建时间：2022-07-11 08:32:20" itemprop="dateCreated datePublished" datetime="2022-07-11T08:32:20+08:00">2022-07-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-22 19:37:04" itemprop="dateModified" datetime="2022-07-22T19:37:04+08:00">2022-07-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -260,7 +266,7 @@
 <h1 id="使用时间值"><a href="#使用时间值" class="headerlink" title="使用时间值"></a>使用时间值</h1><p><a target="_blank" rel="noopener" href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Time.php"><code>sf::时间</code></a>只是一个时间量，所以它支持算术运算，如加法，减法，比较等。时间也可能是负数。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sf::Time t1 = ...;</span><br><span class="line">sf::Time t2 = t1 * <span class="number">2</span>;</span><br><span class="line">sf::Time t3 = t1 + t2;</span><br><span class="line">sf::Time t4 = -t3;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> b1 = (t1 == t2);</span><br><span class="line"><span class="type">bool</span> b2 = (t3 &gt; t4);</span><br></pre></td></tr></table></figure>
 
-<h1 id="测量时间"><a href="#测量时间" class="headerlink" title="测量时间"></a>测量时间</h1><p>SFML有一个非常简单的时间来测量时间的类：sf::Clock。它只有两个函数：<code>getElapsed</code>、<code>Timerestart</code>检索自时钟启动以来经过的时间，以及重新启动时钟。</p>
+<h1 id="测量时间"><a href="#测量时间" class="headerlink" title="测量时间"></a>测量时间</h1><p>SFML有一个非常简单的时间来测量时间的类：sf::Clock。它只有两个函数：<code>getElapsed</code>、<code>restart</code>检索自时钟启动以来经过的时间，以及重新启动时钟。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sf::Clock clock; <span class="comment">// 启动时钟</span></span><br><span class="line">...</span><br><span class="line">sf::Time elapsed1 = clock.<span class="built_in">getElapsedTime</span>();</span><br><span class="line">std::cout &lt;&lt; elapsed1.<span class="built_in">asSeconds</span>() &lt;&lt; std::endl;</span><br><span class="line">clock.<span class="built_in">restart</span>();</span><br><span class="line">...</span><br><span class="line">sf::Time elapsed2 = clock.<span class="built_in">getElapsedTime</span>();</span><br><span class="line">std::cout &lt;&lt; elapsed2.<span class="built_in">asSeconds</span>() &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
 
 <p>下面是一个示例，它使用游戏循环的每次迭代所经过的时间来更新游戏逻辑</p>
@@ -365,20 +371,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
